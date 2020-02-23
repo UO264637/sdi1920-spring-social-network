@@ -13,7 +13,9 @@ public class RolesService {
 	@Autowired
 	private RolesRepository rolesRepository;
 
+	public void addRole(Role role) { rolesRepository.save(role); }
 	public Role findByName(String name) {
 		return rolesRepository.findByName(name);
 	}
+
 }

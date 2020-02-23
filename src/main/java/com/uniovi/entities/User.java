@@ -25,14 +25,14 @@ public class User {
 	@ManyToOne
 	private Role role;
 
-	@OneToMany
-	private Set<Friendship> friendships;
-	@OneToMany
-	private Set<Friendship> friendshipsReceived;
+//	@OneToMany
+//	private Set<Friendship> friendships;
+//	@OneToMany
+//	private Set<Friendship> friendshipsReceived;
 
 	public User() {
-		friendships = new HashSet<>();
-		friendshipsReceived = new HashSet<>();
+		//friendships = new HashSet<>();
+		//friendshipsReceived = new HashSet<>();
 	}
 
 	public User(String email, String name, String surname) {
@@ -98,21 +98,21 @@ public class User {
 		this.role = role;
 	}
 
-	public Set<Friendship> getFriendships() {
-		return friendships;
-	}
-
-	public void setFriendships(Set<Friendship> friendships) {
-		this.friendships = friendships;
-	}
-
-	public Set<Friendship> getFriendshipsReceived() {
-		return friendshipsReceived;
-	}
-
-	public void setFriendshipsReceived(Set<Friendship> friendshipsReceived) {
-		this.friendshipsReceived = friendshipsReceived;
-	}
+//	public Set<Friendship> getFriendships() {
+//		return friendships;
+//	}
+//
+//	public void setFriendships(Set<Friendship> friendships) {
+//		this.friendships = friendships;
+//	}
+//
+//	public Set<Friendship> getFriendshipsReceived() {
+//		return friendshipsReceived;
+//	}
+//
+//	public void setFriendshipsReceived(Set<Friendship> friendshipsReceived) {
+//		this.friendshipsReceived = friendshipsReceived;
+//	}
 
 	@Override
 	public String toString() {
