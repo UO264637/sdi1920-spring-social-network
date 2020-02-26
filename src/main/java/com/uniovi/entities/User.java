@@ -40,6 +40,7 @@ public class User {
 		this.email = email;
 		this.name = name;
 		this.surname = surname;
+		this.password = "123"; // No me pegues, es para probar
 	}
 
 	public Long getId() {

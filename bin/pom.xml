@@ -15,7 +15,7 @@
     <description>Spring-based social network</description>
 
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>13</java.version>
         <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
     </properties>
 
@@ -58,17 +58,6 @@
             <artifactId>hsqldb</artifactId>
             <scope>runtime</scope>
         </dependency>
-        
-        <dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-
-		<dependency>
- 			<groupId>org.thymeleaf.extras</groupId>
- 			<artifactId>thymeleaf-extras-springsecurity4</artifactId>
- 			<version>3.0.4.RELEASE</version>
-		</dependency>
 
     </dependencies>
 

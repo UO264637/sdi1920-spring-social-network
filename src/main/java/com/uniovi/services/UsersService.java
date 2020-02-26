@@ -4,18 +4,22 @@ import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.uniovi.entities.User;
 import com.uniovi.repositories.UsersRepository;
 
 @Service
 public class UsersService {
+	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Autowired
 	private UsersRepository usersRepository;
 
 	public void addUser(User user) {
-		//user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		usersRepository.save(user);
 	}
 
@@ -31,7 +35,7 @@ public class UsersService {
 	}
 
 	public User getUser(Long id) {
-		var user = usersRepository.findById(id);
+		Optional<User> user = usersRepository.findById(id);
 		return (user.isPresent()) ? usersRepository.findById(id).get() : null;
 	}
 
