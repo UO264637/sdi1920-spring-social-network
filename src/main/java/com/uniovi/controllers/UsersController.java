@@ -1,5 +1,7 @@
 package com.uniovi.controllers;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,5 +49,14 @@ public class UsersController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Model model) {
 		return "login";
+	}
+	
+	@RequestMapping("/user/list")
+	public String getList(Model model, Principal principal){
+		String email = principal.getName();
+		User user = usersService.getUserByEmail(email);
+		
+		model.addAttribute("userList", usersService.getOtherUsers(user));
+		return "user/list";
 	}
 }

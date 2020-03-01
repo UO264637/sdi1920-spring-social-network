@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.uniovi.entities.Role;
 import com.uniovi.entities.User;
 import com.uniovi.repositories.UsersRepository;
 
@@ -29,9 +31,8 @@ public class UsersService {
 		return users;
 	}
 
-	public Page<User> getOtherUsers() {
-		//TODO
-		return null;
+	public List<User> getOtherUsers(User user) {
+		return usersRepository.findOtherUsers(user, new Role(RolesService.ROLES[1]));
 	}
 
 	public User getUser(Long id) {
