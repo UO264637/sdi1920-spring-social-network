@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,8 +37,8 @@ public class UsersService {
 		return users;
 	}
 
-	public List<User> getOtherUsers(User user) {
-		List<User> users = usersRepository.findOtherUsers(user.getEmail(), rolesRepository.findByName(RolesService.ROLES[0]));
+	public Page<User> getOtherUsers(Pageable pageable, User user) {
+		Page<User> users = usersRepository.findOtherUsers(pageable, user.getEmail(), rolesRepository.findByName(RolesService.ROLES[0]));
 		return users;
 	}
 

@@ -13,14 +13,23 @@
 			</div>
 			<button type="submit" class="btn btn-default">Buscar</button>
 		</form>
-		<button type="button" id="updateButton" class="btn btn-default" th:text="#{update}">Actualizar</button>
-		<script>
-			$("#updateButton").click(function() {
-				$("#tableUsers").load('/user/list/update');
-			});
+		<button type="button" id="updateButton" class="btn btn-default"
+			th:text="#{update}">Actualizar</button>
+		<script th:inline="javascript">
+ /*<![CDATA[*/
+	 $( "#updateButton" ).click(function() {
+ var numberPage = [[${param.page}]];
+ var urlUpdate = '/mark/list/update';
+ if (numberPage != null ){
+ urlUpdate += "?page="+numberPage[0];
+ }
+ $("#tableMarks").load(urlUpdate);
+ });
+ /*]]>*/
 		</script>
 		<div class="table-responsive">
-			<table class="table table-hover" th:fragment="tableUsers" id="tableUsers">
+			<table class="table table-hover" th:fragment="tableUsers"
+				id="tableUsers">
 				<thead>
 					<tr>
 						<th th:text="#{name}">Nombre</th>
@@ -40,6 +49,7 @@
 				</tbody>
 			</table>
 		</div>
+		<footer th:replace="fragments/pagination" />
 	</div>
 	<footer th:replace="fragments/footer" />
 </body>
