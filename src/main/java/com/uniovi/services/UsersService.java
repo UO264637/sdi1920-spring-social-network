@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.uniovi.entities.Role;
 import com.uniovi.entities.User;
+import com.uniovi.repositories.RolesRepository;
 import com.uniovi.repositories.UsersRepository;
 
 @Service
@@ -19,6 +20,10 @@ public class UsersService {
 
 	@Autowired
 	private UsersRepository usersRepository;
+	
+	@Autowired
+	private RolesRepository rolesRepository;
+
 
 	public void addUser(User user) {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -32,7 +37,8 @@ public class UsersService {
 	}
 
 	public List<User> getOtherUsers(User user) {
-		return usersRepository.findOtherUsers(user, new Role(RolesService.ROLES[1]));
+		List<User> users = usersRepository.findOtherUsers(user.getEmail(), rolesRepository.findByName(RolesService.ROLES[0]));
+		return users;
 	}
 
 	public User getUser(Long id) {

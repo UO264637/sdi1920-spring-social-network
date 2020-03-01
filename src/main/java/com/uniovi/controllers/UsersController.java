@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.uniovi.entities.User;
-import com.uniovi.services.RolesService;
 import com.uniovi.services.SecurityService;
 import com.uniovi.services.UsersService;
 import com.uniovi.validators.SignUpFormValidator;
@@ -50,7 +49,7 @@ public class UsersController {
 	public String login(Model model) {
 		return "login";
 	}
-	
+
 	@RequestMapping("/user/list")
 	public String getList(Model model, Principal principal){
 		String email = principal.getName();
