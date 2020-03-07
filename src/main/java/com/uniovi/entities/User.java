@@ -1,11 +1,16 @@
 package com.uniovi.entities;
 
 import javax.persistence.*;
-import java.net.UnknownServiceException;
+
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * User entity, it holds the information about the application users (email, name and surname)
+ * It also holds the security information being this the password hash and user role
+ * Users can request friendships or other users and also accept those requested friendships
+ */
 @Entity
 public class User {
 
@@ -25,14 +30,14 @@ public class User {
 	@ManyToOne
 	private Role role;
 
-//	@OneToMany
-//	private Set<Friendship> friendships;
-//	@OneToMany
-//	private Set<Friendship> friendshipsReceived;
+	@OneToMany(mappedBy="requester", cascade=CascadeType.ALL, orphanRemoval = true)
+	private Set<Friendship> friendships;
+	@OneToMany(mappedBy="requested", cascade=CascadeType.ALL, orphanRemoval = true)
+	private Set<Friendship> friendshipsReceived;
 
 	public User() {
-		//friendships = new HashSet<>();
-		//friendshipsReceived = new HashSet<>();
+		friendships = new HashSet<>();
+		friendshipsReceived = new HashSet<>();
 	}
 
 	public User(String email, String name, String surname) {
@@ -40,7 +45,7 @@ public class User {
 		this.email = email;
 		this.name = name;
 		this.surname = surname;
-		this.password = "123"; // No me pegues, es para probar
+		this.password = "123"; // No me pegues, es para probar		//Tranquila yo iba hacer algo parecido
 	}
 
 	public Long getId() {
@@ -99,21 +104,21 @@ public class User {
 		this.role = role;
 	}
 
-//	public Set<Friendship> getFriendships() {
-//		return friendships;
-//	}
-//
-//	public void setFriendships(Set<Friendship> friendships) {
-//		this.friendships = friendships;
-//	}
-//
-//	public Set<Friendship> getFriendshipsReceived() {
-//		return friendshipsReceived;
-//	}
-//
-//	public void setFriendshipsReceived(Set<Friendship> friendshipsReceived) {
-//		this.friendshipsReceived = friendshipsReceived;
-//	}
+	public Set<Friendship> getFriendships() {
+		return friendships;
+	}
+
+	public void setFriendships(Set<Friendship> friendships) {
+		this.friendships = friendships;
+	}
+
+	public Set<Friendship> getFriendshipsReceived() {
+		return friendshipsReceived;
+	}
+
+	public void setFriendshipsReceived(Set<Friendship> friendshipsReceived) {
+		this.friendshipsReceived = friendshipsReceived;
+	}
 
 	@Override
 	public String toString() {
@@ -139,15 +144,33 @@ public class User {
 
 	// ---------------------------------------------------------------------
 
+	/**
+	 * Combines name and surname
+	 * @return full name of the user
+	 */
 	public String getFullName() {
 		return name + " " + surname;
 	}
 
+	/**
+	 * Request the friendship of another user
+	 * @param requested	User to add as friend
+	 */
 	public void requestFriendship(User requested) {
-		//TODO
+		Friendship friendship = new Friendship(this, requested);
+		this.friendships.add(friendship);
+		requested.getFriendshipsReceived().add(friendship);
 	}
 
-	public void acceptFriendship(User requester) {
-		//TODO
+	/**
+	 * Es probable que este método deba funcionar recibiendo el usuario a aceptar en vez de la amistad, esto es un placeholder
+	 * 
+	 * 
+	 * Accept the friendship of another user
+	 * @param frienship	Friensdhip to be accepted
+	 */
+	public void acceptFriendship(Friendship friendship) {
+		friendship.setPending(false);
 	}
+	
 }
