@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.uniovi.entities.Role;
 import com.uniovi.entities.User;
 import com.uniovi.repositories.RolesRepository;
 import com.uniovi.repositories.UsersRepository;
@@ -58,4 +57,13 @@ public class UsersService {
 	public void deleteUser(Long id) {
 		usersRepository.deleteById(id);
 	}
+	
+	public Page<User> searchUserByNameSurnameAndEmail (Pageable pageable, String searchText, User user){
+		searchText = "%"+searchText+"%";
+		
+		Page<User> users = usersRepository.searchByNameSurnameAndEmail(pageable, searchText, user.getEmail(), rolesRepository.findByName(RolesService.ROLES[0]));
+		
+		return users;
+	}
+
 }

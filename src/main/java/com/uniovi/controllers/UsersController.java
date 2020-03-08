@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.uniovi.entities.User;
 import com.uniovi.services.SecurityService;
@@ -53,12 +54,19 @@ public class UsersController {
 	}
 
 	@RequestMapping("/user/list")
-	public String getList(Model model, Pageable pageable, Principal principal){
+	public String getList(Model model, Pageable pageable, Principal principal, @RequestParam(value = "", required=false) String searchText){
+		Page<User> users = null;
+		
 		String email = principal.getName();
 		User user = usersService.getUserByEmail(email);
 		
-		Page<User> users = usersService.getOtherUsers(pageable, user);
-		
+		if (searchText != null && !searchText.isEmpty()) {
+			users = usersService.searchUserByNameSurnameAndEmail(pageable, searchText, user);
+		}
+		else {
+			users = usersService.getOtherUsers(pageable, user);
+		}
+			
 		model.addAttribute("userList", users.getContent());
 		model.addAttribute("page", users);
 		return "user/list";
