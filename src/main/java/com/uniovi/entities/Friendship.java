@@ -100,7 +100,7 @@ public class Friendship {
 
 	@Override
 	public String toString() {
-		return "Friendship [id=" + id + ", requester=" + requester + ", requested=" + requested + ", pending=" + pending
+		return "Friendship [requester=" + requester + ", requested=" + requested + ", pending=" + pending
 				+ "]";
 	}
 	

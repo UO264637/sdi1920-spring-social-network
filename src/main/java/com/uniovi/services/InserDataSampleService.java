@@ -65,18 +65,13 @@ public class InserDataSampleService {
 		user1.requestFriendship(user3);
 		user1.requestFriendship(user4);
 		user1.requestFriendship(user5);
-		user2.requestFriendship(user3);
-		user3.requestFriendship(user4);
-		user4.requestFriendship(user5);
-		
-		// Persisting friendships
-		usersService.updateUser(userAdmin);
 		usersService.updateUser(user1);
+		user2.requestFriendship(user3);
 		usersService.updateUser(user2);
+		user3.requestFriendship(user4);
 		usersService.updateUser(user3);
+		user4.requestFriendship(user5);
 		usersService.updateUser(user4);
-		usersService.updateUser(user5);
-		usersService.updateUser(user6);
 	}
 	
 	@Transactional

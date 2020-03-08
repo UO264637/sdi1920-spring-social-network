@@ -5,6 +5,7 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * User entity, it holds the information about the application users (email, name and surname)
@@ -32,7 +33,7 @@ public class User {
 
 	@OneToMany(mappedBy="requester", cascade=CascadeType.ALL, orphanRemoval = true)
 	private Set<Friendship> friendships;
-	@OneToMany(mappedBy="requested", cascade=CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy="requested", orphanRemoval = true)
 	private Set<Friendship> friendshipsReceived;
 
 	public User() {
@@ -172,5 +173,25 @@ public class User {
 	public void acceptFriendship(Friendship friendship) {
 		friendship.setPending(false);
 	}
+	
+	/**
+	 * Devuelve true o false según si el usuario pedido es amigo o no
+	 * @param user	Usuario a comprobar si es amigo
+	 * @return		true si es amigo, false en caso contrario
+	 */
+	public boolean isFriend(User user) {
+		return friendships.stream().filter(x -> !x.isPending()).map(x -> x.getRequested()).collect(Collectors.toList()).contains(user) ||
+				friendshipsReceived.stream().filter(x -> !x.isPending()).map(x -> x.getRequester()).collect(Collectors.toList()).contains(user);
+	}
+	
+	/**
+	 * Devuelve true o false según si si se le ha pedido amistad ya a ese amigo o no
+	 * @param user	Usuario a comprobar si se ha solicitado su amistad
+	 * @return		true si se ha solicitado ya, false en caso contrario
+	 */
+	public boolean isRequested(User user) {
+		return friendships.stream().filter(x -> x.isPending()).map(x -> x.getRequested()).collect(Collectors.toList()).contains(user);
+	}
+	
 	
 }

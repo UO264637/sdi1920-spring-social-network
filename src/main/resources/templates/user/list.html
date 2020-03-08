@@ -19,18 +19,20 @@
 				<thead>
 					<tr>
 						<th th:text="#{name}">Nombre</th>
-						<th>e-mail</th>
-						<th class="col-md-1"></th>
-						<th class="col-md-1"></th>
-						<th class="col-md-1"></th>
+						<th>Email</th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="user : ${userList}">
-						<td th:text="${user.name}">Pepe</td>
+						<td th:text="${user.getFullName()}">Pepe</td>
 						<td th:text="${user.email}">pepe@gmail.com</td>
+						<td></td>
+						<td>
+							<a type="button" class="btn btn-primary"
+								th:text="#{list.addfriend}"  th:href="${'/user/addFriend/' + user.email}" >Añadir amigo</button>
+						</td>
 					</tr>
 				</tbody>
 			</table>
@@ -38,5 +40,6 @@
 		<footer th:replace="fragments/pagination" />
 	</div>
 	<footer th:replace="fragments/footer" />
+	<!-- <script src="/script/user/list.js"></script> -->
 </body>
 </html>
