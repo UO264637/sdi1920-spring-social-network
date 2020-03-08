@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head" />
+<body>
+
+	<!-- Barra de Navegaciï¿½n superior -->
+	<nav th:replace="fragments/nav" />
+
+	<div class="container">
+		<h2 th:text="#{publication.add}">Añadir Publicación</h2>
+		<form class="form-horizontal" method="post" action="/publication/add"
+			th:object="${publication}">
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="title"
+					th:text="#{publication.title}">Título:</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="title"
+						placeholder="Título" required="true" /> <span class="text-danger"
+						th:if="${#fields.hasErrors('title')}" th:errors="*{title}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="text"
+					th:text="#{publication.text}">Texto:</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="text" placeholder=""
+						required="true" /> <span class="text-danger"
+						th:if="${#fields.hasErrors('text')}" th:errors="*{text}">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-primary" th:text="#{send}">Enviar</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<footer th:replace="fragments/footer" />
+</body>
+</html>

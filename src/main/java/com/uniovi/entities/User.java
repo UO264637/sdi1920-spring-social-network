@@ -35,6 +35,9 @@ public class User {
 	private Set<Friendship> friendships;
 	@OneToMany(mappedBy="requested", orphanRemoval = true)
 	private Set<Friendship> friendshipsReceived;
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private Set<Publication> publications;
 
 	public User() {
 		friendships = new HashSet<>();
@@ -119,6 +122,14 @@ public class User {
 
 	public void setFriendshipsReceived(Set<Friendship> friendshipsReceived) {
 		this.friendshipsReceived = friendshipsReceived;
+	}
+	
+	public Set<Publication> getPublications() {
+		return publications;
+	}
+
+	public void setPublications(Set<Publication> publications) {
+		this.publications = publications;
 	}
 
 	@Override
