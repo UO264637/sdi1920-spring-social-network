@@ -183,6 +183,7 @@ public class User {
 	 */
 	public void acceptFriendship(Friendship friendship) {
 		friendship.setPending(false);
+		//TODO
 	}
 	
 	/**

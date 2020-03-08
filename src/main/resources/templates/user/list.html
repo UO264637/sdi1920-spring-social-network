@@ -25,13 +25,15 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="user : ${userList}">
-						<td th:text="${user.getFullName()}">Pepe</td>
-						<td th:text="${user.email}">pepe@gmail.com</td>
+					<tr th:each="u : ${userList}">
+						<td th:text="${u.getFullName()}">Pepe</td>
+						<td th:text="${u.email}">pepe@gmail.com</td>
 						<td></td>
-						<td>
-							<a type="button" class="btn btn-primary"
-								th:text="#{list.addfriend}"  th:href="${'/user/addFriend/' + user.email}" >Añadir amigo</button>
+						<td th:if="${!user.isFriend(u)}">
+							<a type="button" class="btn btn-secondary" th:if="${user.isRequested(u)}"
+								th:text="#{list.requested}" disabled>Solicitado</a>
+							<a type="button" class="btn btn-primary addButton" th:unless="${user.isRequested(u)}"
+								th:text="#{list.addfriend}"  th:href="${'/user/addFriend/' + u.email}" >Añadir amigo</a>
 						</td>
 					</tr>
 				</tbody>
@@ -40,6 +42,6 @@
 		<footer th:replace="fragments/pagination" />
 	</div>
 	<footer th:replace="fragments/footer" />
-	<!-- <script src="/script/user/list.js"></script> -->
+	<script src="/script/user/list.js"></script>
 </body>
 </html>

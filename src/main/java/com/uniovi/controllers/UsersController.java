@@ -77,6 +77,7 @@ public class UsersController {
 			users = usersService.getOtherUsers(pageable, user);
 		}
 			
+		model.addAttribute("user", user);
 		model.addAttribute("userList", users.getContent());
 		model.addAttribute("page", users);
 		return "user/list";

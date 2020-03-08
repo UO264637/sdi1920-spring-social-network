@@ -1,5 +1,6 @@
 package com.uniovi.services;
 
+import com.uniovi.entities.Friendship;
 import com.uniovi.entities.Role;
 import com.uniovi.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,7 @@ public class InserDataSampleService {
 		
 		// Frienships creation
 		user1.requestFriendship(user2);
+		user1.acceptFriendship((Friendship) user2.getFriendshipsReceived().toArray()[0]);		// pero que feo coño, ya haré otro método mejor, creo
 		user1.requestFriendship(user3);
 		user1.requestFriendship(user4);
 		user1.requestFriendship(user5);

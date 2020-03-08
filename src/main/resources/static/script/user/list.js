@@ -1,3 +1,3 @@
-$( "#addButton" ).click(function() {
-	alert("funciona");
+$( ".addButton" ).click(function() {
+	alert("Solicitud enviada correctamente");
 });
