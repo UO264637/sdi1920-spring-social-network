@@ -41,6 +41,8 @@ public class PublicationsController {
 		User user = usersService.getUserByEmail(email);
 		Page<Publication> publications = new PageImpl<Publication>(new LinkedList<Publication>());
 		
+		publications = publicationsService.getPublicationsForUser(pageable, user);
+		
 		model.addAttribute("publicationList", publications.getContent());
 		model.addAttribute("page", publications);
 		return "publication/list";
@@ -58,19 +60,6 @@ public class PublicationsController {
 		publication.setDate(new Date());
 		
 		publicationsService.addPublication(publication);
-		return "redirect:/publication/list";
-	}
-
-	@RequestMapping("/publication/details/{id}")
-	public String getDetail(Model model, @PathVariable Long id) {
-		model.addAttribute("publication", publicationsService.getPublication(id));
-		return "publication/details";
-
-	}
-
-	@RequestMapping("/publication/delete/{id}")
-	public String deletePublication(@PathVariable Long id) {
-		publicationsService.deletePublication(id);
 		return "redirect:/publication/list";
 	}
 
