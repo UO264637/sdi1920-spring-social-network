@@ -27,7 +27,20 @@
 						<!-- Columna de eliminar usuario -->
 						<th class="col-md-1"> 
 							<button type="button" id="deleteButton" sec:authorize="hasRole('ROLE_ADMIN')"
-										class="btn btn-info">Eliminar</button> 
+										class="btn btn-default">Eliminar</button>
+<script th:inline="javascript">
+ /*<![CDATA[*/
+	 $( "#deleteButton" ).click(function() {
+ var urlDelete = '/user/list/delete' + "?ids=";
+ var $boxes = $('input[name=cb]:checked');
+ $boxes.each(function(){
+	urlDelete += $(this).attr("id") + ",";
+	});
+ urlDelete = urlDelete.substring(0, urlDelete.length - 1);
+ $("#tableUsers").load(urlDelete);
+ });
+ /*]]>*/
+		</script> 
 						</th>
 					</tr>
 				</thead>
@@ -51,7 +64,7 @@
 						</td>
 						<td>
 							<!-- Checkbox de selección de usuarios -->
-							<input type="checkbox" id="${u.id}"  sec:authorize="hasRole('ROLE_ADMIN')">
+							<input type="checkbox" name= "cb" th:id="${u.getId()}"  sec:authorize="hasRole('ROLE_ADMIN')">
 						</td>
 					</tr>
 				</tbody>

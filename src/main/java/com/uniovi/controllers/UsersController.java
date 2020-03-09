@@ -1,6 +1,8 @@
 package com.uniovi.controllers;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -76,7 +78,8 @@ public class UsersController {
 		else {
 			users = usersService.getOtherUsers(pageable, user);
 		}
-			
+		
+		model.addAttribute("list", "hola");
 		model.addAttribute("user", user);
 		model.addAttribute("userList", users.getContent());
 		model.addAttribute("page", users);
@@ -96,5 +99,19 @@ public class UsersController {
 			usersService.updateUser(user);
 		}
 		return "redirect:/user/list";
+	}
+	
+	@RequestMapping("/user/list/delete")
+	public String updateList(Model model, Pageable pageable, Principal principal, @RequestParam List<String> ids) {
+		
+		for (String id: ids) {
+			usersService.deleteUser(Long.parseLong(id));
+		}
+		
+		String email = principal.getName();
+		User user = usersService.getUserByEmail(email);
+		Page<User> users = usersService.getOtherUsers(pageable, user);
+		model.addAttribute("userList", users.getContent());
+		return "/user/list :: tableUsers";
 	}
 }
