@@ -34,6 +34,8 @@ public class UsersController {
 	@Autowired
 	private SignUpFormValidator signUpFormValidator;
 	
+	private boolean sentRequest = false;
+	
 	// SIGNUP ------------------------------------------------------------------------------
 	
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
@@ -76,10 +78,12 @@ public class UsersController {
 		else {
 			users = usersService.getOtherUsers(pageable, user);
 		}
-			
+
 		model.addAttribute("user", user);
 		model.addAttribute("userList", users.getContent());
 		model.addAttribute("page", users);
+		model.addAttribute("sentRequest", sentRequest);
+		sentRequest = false;
 		return "user/list";
 	}
 	
@@ -94,6 +98,7 @@ public class UsersController {
 		if (!user.isFriend(userToAdd) && !user.isRequested(userToAdd)) {
 			user.requestFriendship(userToAdd);
 			usersService.updateUser(user);
+			sentRequest = true;
 		}
 		return "redirect:/user/list";
 	}
