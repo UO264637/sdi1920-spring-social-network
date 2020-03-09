@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head th:replace="fragments/head" />
@@ -35,19 +34,6 @@
 						<th class="col-md-1"> 
 							<button type="button" id="deleteButton" sec:authorize="hasRole('ROLE_ADMIN')"
 										class="btn btn-info">Eliminar</button> 
-										<script th:inline="javascript">
- /*<![CDATA[*/
-	 $( "#deleteButton" ).click(function() {
- var urlDelete = '/user/list/delete' + "?ids=";
- var $boxes = $('input[name=cb]:checked');
- $boxes.each(function(){
-	urlDelete += $(this).attr("id") + ",";
-	});
- urlDelete = urlDelete.substring(0, urlDelete.length - 1);
- $("#tableUsers").load(urlDelete);
- });
- /*]]>*/
-		</script>
 						</th>
 					</tr>
 				</thead>
@@ -62,7 +48,7 @@
 							<a type="button" class="btn btn-success" th:if="${user.isRequested(u) or u.isRequested(user)}"
 								th:text="#{list.requested}" disabled>Solicitado</a>
 							<!-- Botón de solicitar amistad -->
-							<a type="button" class="btn btn-primary addButton" th:unless="${user.isRequested(u)}"
+							<a type="button" class="btn btn-primary addButton" th:unless="${user.isRequested(u) or u.isRequested(user)}"
 								th:text="#{list.addfriend}"  th:href="${'/user/addFriend/' + u.email}" >Añadir amigo</a>
 						</td>
 						<td sec:authorize="hasRole('ROLE_USER')" th:unless="${!user.isFriend(u)}">
