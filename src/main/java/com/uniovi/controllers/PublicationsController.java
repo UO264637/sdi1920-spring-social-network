@@ -4,8 +4,6 @@ import java.security.Principal;
 import java.util.Date;
 import java.util.LinkedList;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,9 +46,9 @@ public class PublicationsController {
 		return "publication/list";
 	}
 	
-	@RequestMapping("/publication/listFriend")
-	public String getListFriend(Model model, Pageable pageable, Principal principal) {
-		String email = principal.getName();
+	@RequestMapping("/publication/list/{email}")
+	public String getListFriend(Model model, Pageable pageable, Principal principal, @PathVariable String email) {
+		
 		User user = usersService.getUserByEmail(email);
 		Page<Publication> publications = new PageImpl<Publication>(new LinkedList<Publication>());
 		

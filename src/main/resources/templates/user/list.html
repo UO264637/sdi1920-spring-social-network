@@ -22,28 +22,13 @@
 						<th sec:authorize="hasRole('ROLE_ADMIN')">Apellidos</th>
 						<th>Email</th>
 						<th class="col-md-1"></th>
+						<!-- Columna de amistad -->
 						<th class="col-md-1" sec:authorize="hasRole('ROLE_USER')"></th>
-						<th class="col-md-1"> <button type="button" id="deleteButton" sec:authorize="hasRole('ROLE_ADMIN')"
-										class="btn btn-info">Eliminar</button> </th>
-										<script th:inline="javascript">
-										/*<![CDATA[*/
-										$("#deleteButton")
-												.click(
-														function() {
-															$
-																	.get(
-																			"/mark/[[${mark.id}]]/noresend",
-																			function(data) {
-																				var numberPage = [[${param.page}]];
-																				 var urlUpdate = '/mark/list/update';
-																				 if ( numberPage != null ){
-																				 urlUpdate += "?page="+numberPage[0];
-																				 }
-																				 $("#tableMarks").load(urlUpdate);
-																			});
-														});
-										/*]]>*/
-									</script>
+						<!-- Columna de eliminar usuario -->
+						<th class="col-md-1"> 
+							<button type="button" id="deleteButton" sec:authorize="hasRole('ROLE_ADMIN')"
+										class="btn btn-info">Eliminar</button> 
+						</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -53,12 +38,20 @@
 						<td th:text="${u.email}">pepe@gmail.com</td>
 						<td></td>
 						<td sec:authorize="hasRole('ROLE_USER')" th:if="${!user.isFriend(u)}">
-							<a type="button" class="btn btn-secondary" th:if="${user.isRequested(u)}"
+							<!-- Botón de amistad solicitada -->
+							<a type="button" class="btn btn-success" th:if="${user.isRequested(u) or u.isRequested(user)}"
 								th:text="#{list.requested}" disabled>Solicitado</a>
+							<!-- Botón de solicitar amistad -->
 							<a type="button" class="btn btn-primary addButton" th:unless="${user.isRequested(u)}"
 								th:text="#{list.addfriend}"  th:href="${'/user/addFriend/' + u.email}" >Añadir amigo</a>
 						</td>
-						<td><input type="checkbox" id="${u.id}"  sec:authorize="hasRole('ROLE_ADMIN')">
+						<td sec:authorize="hasRole('ROLE_USER')" th:unless="${!user.isFriend(u)}">
+							<!-- Mensaje de amistad ya existente -->
+							<a type="button" class="btn btn-secondary" th:text="#{list.alreadyfriends}" disabled>Ya sois amigos</a>
+						</td>
+						<td>
+							<!-- Checkbox de selección de usuarios -->
+							<input type="checkbox" id="${u.id}"  sec:authorize="hasRole('ROLE_ADMIN')">
 						</td>
 					</tr>
 				</tbody>
