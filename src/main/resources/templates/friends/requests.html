@@ -9,6 +9,10 @@
 		<div class="alert alert-success" role="alert" th:if="${acceptedRequest}" th:text="#{requests.accepted}">
 			Aviso de envío de amistad
 		</div>
+		<!-- Aviso de solicitud de amistad rechazada -->
+		<div class="alert alert-danger" role="alert" th:if="${refusedRequest}" th:text="#{requests.refused}">
+			Aviso de rechazo de amistad
+		</div>
 		<!-- Cabecera -->
 		<h2 th:text="#{requests}">Peticiones</h2>
 		<div class="table-responsive">
@@ -37,7 +41,7 @@
 						<td>
 							<!-- Botón de rechazar amistad -->
 							<a type="button" class="btn btn-danger" th:text="#{refuse}"
-								th:href="${'/user/refuse/' + r.id}" >Rechazar</a>
+								th:href="${'/friends/refuse/' + r.id}" >Rechazar</a>
 						</td>
 					</tr>
 				</tbody>

@@ -17,37 +17,41 @@ import com.uniovi.services.UsersService;
 
 @Controller
 public class FriendsController {
-	
+
 	@Autowired
 	UsersService usersService;
 	@Autowired
 	FriendshipsService friendshipsService;
-	
+
 	private boolean acceptedRequest = false;
 	private boolean refusedRequest = false;
-	
-	// REQUESTS ---------------------------------------------------------------------------------
-	
+
+	// REQUESTS
+	// ---------------------------------------------------------------------------------
+
 	@RequestMapping("/friends/requests")
-	public String getRequest(Model model, Pageable pageable, Principal principal){
+	public String getRequest(Model model, Pageable pageable, Principal principal) {
 		Page<Friendship> friendships = null;
-		
+
 		String email = principal.getName();
 		User user = usersService.getUserByEmail(email);
-		
+
 		friendships = friendshipsService.getRequests(pageable, user);
 
 		model.addAttribute("requestsList", friendships.getContent());
 		model.addAttribute("page", friendships);
 		model.addAttribute("acceptedRequest", acceptedRequest);
+		model.addAttribute("refusedRequest", refusedRequest);
 		acceptedRequest = false;
+		refusedRequest = false;
 		return "friends/requests";
 	}
-	
-	// ACCEPT ----------------------------------------------------------------------------------
-	
+
+	// ACCEPT
+	// ----------------------------------------------------------------------------------
+
 	@RequestMapping(value = "/friends/accept/{id}")
-	public String addFriend(Model model, Principal principal, @PathVariable Long id) {
+	public String accept(Model model, Principal principal, @PathVariable Long id) {
 		// We load the user and the friendship
 		User user = usersService.getUserByEmail(principal.getName());
 		Friendship friendship = friendshipsService.getFriendship(id);
@@ -57,6 +61,18 @@ public class FriendsController {
 			usersService.updateUser(user);
 			acceptedRequest = true;
 		}
+		return "redirect:/friends/requests";
+	}
+
+	// REFUSE ----------------------------------------------------------------------------------
+
+	@RequestMapping(value = "/friends/refuse/{id}")
+	public String refuse(Model model, Principal principal, @PathVariable Long id) {
+		// We load the friendship
+		Friendship friendship = friendshipsService.getFriendship(id);
+		// And we delete it
+		friendshipsService.remove(friendship);
+		refusedRequest = true;
 		return "redirect:/friends/requests";
 	}
 }

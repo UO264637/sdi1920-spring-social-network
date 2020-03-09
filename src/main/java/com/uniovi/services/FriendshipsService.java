@@ -27,4 +27,8 @@ public class FriendshipsService {
 		return (friendship.isPresent()) ? friendship.get() : null;
 	}
 
+	public void remove(Friendship friendship) {
+		friendshipRepository.delete(friendship);
+	}
+
 }
