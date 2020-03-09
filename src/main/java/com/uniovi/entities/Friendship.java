@@ -104,4 +104,16 @@ public class Friendship {
 				+ "]";
 	}
 	
+	// ------------------------------------------------------------------------------------------------------
+	
+	/**
+	 * Returns a copy of this friendship reflexed to maintain bidirectionality of the graph
+	 * @return	reflexed friendship
+	 */
+	public Friendship getReflexed() {
+		Friendship reflexed = new Friendship(requested, requester);
+		reflexed.pending = this.pending;
+		return reflexed;
+	}
+	
 }

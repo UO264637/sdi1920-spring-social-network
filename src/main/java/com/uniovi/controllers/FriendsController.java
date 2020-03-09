@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.uniovi.entities.Friendship;
@@ -22,6 +23,9 @@ public class FriendsController {
 	@Autowired
 	FriendshipsService friendshipsService;
 	
+	private boolean acceptedRequest = false;
+	private boolean refusedRequest = false;
+	
 	// REQUESTS ---------------------------------------------------------------------------------
 	
 	@RequestMapping("/friends/requests")
@@ -35,6 +39,24 @@ public class FriendsController {
 
 		model.addAttribute("requestsList", friendships.getContent());
 		model.addAttribute("page", friendships);
+		model.addAttribute("acceptedRequest", acceptedRequest);
+		acceptedRequest = false;
 		return "friends/requests";
+	}
+	
+	// ACCEPT ----------------------------------------------------------------------------------
+	
+	@RequestMapping(value = "/friends/accept/{id}")
+	public String addFriend(Model model, Principal principal, @PathVariable Long id) {
+		// We load the user and the friendship
+		User user = usersService.getUserByEmail(principal.getName());
+		Friendship friendship = friendshipsService.getFriendship(id);
+		// And we accept the friendship if they are not friends already
+		if (!user.isFriend(friendship.getRequester())) {
+			user.acceptFriendship(friendship);
+			usersService.updateUser(user);
+			acceptedRequest = true;
+		}
+		return "redirect:/friends/requests";
 	}
 }

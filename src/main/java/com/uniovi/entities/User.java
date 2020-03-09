@@ -182,8 +182,12 @@ public class User {
 	 * @param frienship	Friensdhip to be accepted
 	 */
 	public void acceptFriendship(Friendship friendship) {
+		// We update this friendship
 		friendship.setPending(false);
-		//TODO
+		// And create and store a reflexed one
+		Friendship reflexed = friendship.getReflexed();
+		this.friendships.add(reflexed);
+		friendship.getRequester().friendshipsReceived.add(reflexed);
 	}
 	
 	/**

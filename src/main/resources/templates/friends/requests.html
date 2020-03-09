@@ -5,8 +5,14 @@
 	<!-- Barra de Navegación superior -->
 	<nav th:replace="fragments/nav" />
 	<div class="container">
+		<!-- Aviso de solicitud de amistad exitosa -->
+		<div class="alert alert-success" role="alert" th:if="${acceptedRequest}" th:text="#{requests.accepted}">
+			Aviso de envío de amistad
+		</div>
+		<!-- Cabecera -->
 		<h2 th:text="#{requests}">Peticiones</h2>
 		<div class="table-responsive">
+			<!-- Tabla de peticiones de amistad -->
 			<table class="table table-hover" th:fragment="tableUsers"
 				id="tableUsers">
 				<thead>
@@ -26,11 +32,11 @@
 						<td>
 							<!-- Botón de aceptar amistad -->
 							<a type="button" class="btn btn-primary"
-								th:text="#{accept}" th:href="${'/user/accept/' + r.id}" >Aceptar</a>
+								th:text="#{accept}" th:href="${'/friends/accept/' + r.id}" >Aceptar</a>
 						</td>
 						<td>
 							<!-- Botón de rechazar amistad -->
-							<a type="button" class="btn btn-error" th:text="#{refuse}"
+							<a type="button" class="btn btn-danger" th:text="#{refuse}"
 								th:href="${'/user/refuse/' + r.id}" >Rechazar</a>
 						</td>
 					</tr>

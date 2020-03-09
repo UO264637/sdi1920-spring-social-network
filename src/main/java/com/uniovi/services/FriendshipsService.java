@@ -1,5 +1,7 @@
 package com.uniovi.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +20,11 @@ public class FriendshipsService {
 	public Page<Friendship> getRequests(Pageable pageable, User user) {
 		Page<Friendship> friendships = friendshipRepository.findByRequestedAndPending(pageable, user, true);
 		return friendships;
+	}
+
+	public Friendship getFriendship(Long id) {
+		Optional<Friendship> friendship = friendshipRepository.findById(id);
+		return (friendship.isPresent()) ? friendship.get() : null;
 	}
 
 }

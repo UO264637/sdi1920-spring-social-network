@@ -47,7 +47,7 @@ public class UsersService {
 
 	public User getUser(Long id) {
 		Optional<User> user = usersRepository.findById(id);
-		return (user.isPresent()) ? usersRepository.findById(id).get() : null;
+		return (user.isPresent()) ? user.get() : null;
 	}
 
 	public User getUserByEmail(String email) {
