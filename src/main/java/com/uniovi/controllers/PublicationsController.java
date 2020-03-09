@@ -47,6 +47,19 @@ public class PublicationsController {
 		model.addAttribute("page", publications);
 		return "publication/list";
 	}
+	
+	@RequestMapping("/publication/listFriend")
+	public String getListFriend(Model model, Pageable pageable, Principal principal) {
+		String email = principal.getName();
+		User user = usersService.getUserByEmail(email);
+		Page<Publication> publications = new PageImpl<Publication>(new LinkedList<Publication>());
+		
+		publications = publicationsService.getPublicationsForUser(pageable, user);
+		
+		model.addAttribute("publicationList", publications.getContent());
+		model.addAttribute("page", publications);
+		return "publication/list";
+	}
 
 	@RequestMapping(value = "/publication/add", method = RequestMethod.POST)
 	public String setPublication(Principal principal, @Validated Publication publication, BindingResult result) {
@@ -54,6 +67,7 @@ public class PublicationsController {
 		if (result.hasErrors()) {
 			return "/publication/add";
 		}
+		
 		User user = usersService.getUserByEmail(principal.getName());
 		
 		publication.setUser(user);

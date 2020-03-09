@@ -12,6 +12,7 @@ public class Publication {
 	private String text;
 	private String title;
 	private Date date;
+	private String image;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
@@ -67,6 +68,14 @@ public class Publication {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+	
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	@Override
