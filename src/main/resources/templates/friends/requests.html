@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head" />
+<body>
+	<!-- Barra de Navegación superior -->
+	<nav th:replace="fragments/nav" />
+	<div class="container">
+		<h2 th:text="#{requests}">Peticiones</h2>
+		<div class="table-responsive">
+			<table class="table table-hover" th:fragment="tableUsers"
+				id="tableUsers">
+				<thead>
+					<tr>
+						<th th:text="#{name}">Nombre</th>
+						<th class="col-md-1"></th>
+						<!-- Columna de aceptar amistad -->
+						<th class="col-md-1"></th>
+						<!-- Columna de rechazar amistad -->
+						<th class="col-md-1"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="r : ${requestsList}">
+						<td th:text="${r.requester.getName()}">Pepe</td>
+						<td></td>
+						<td>
+							<!-- Botón de aceptar amistad -->
+							<a type="button" class="btn btn-primary"
+								th:text="#{accept}" th:href="${'/user/accept/' + r.id}" >Aceptar</a>
+						</td>
+						<td>
+							<!-- Botón de rechazar amistad -->
+							<a type="button" class="btn btn-error" th:text="#{refuse}"
+								th:href="${'/user/refuse/' + r.id}" >Rechazar</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<footer th:replace="fragments/pagination" />
+	</div>
+	<footer th:replace="fragments/footer" />
+</body>
+</html>

@@ -87,7 +87,7 @@ public class UsersController {
 		return "user/list";
 	}
 	
-	// EDIT -------------------------------------------------------------------------------
+	// ADD FRIEND -----------------------------------------------------------------------------
 	
 	@RequestMapping(value = "/user/addFriend/{email}")
 	public String addFriend(Model model, Principal principal, @PathVariable String email) {
@@ -102,4 +102,5 @@ public class UsersController {
 		}
 		return "redirect:/user/list";
 	}
+	
 }
