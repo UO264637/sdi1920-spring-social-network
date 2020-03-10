@@ -12,7 +12,9 @@ public class Publication {
 	private String text;
 	private String title;
 	private Date date;
-	private String image;
+	@OneToOne
+    @JoinColumn(name = "FK_IMAGE")
+	private DBFile image;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
@@ -70,11 +72,11 @@ public class Publication {
 		this.user = user;
 	}
 	
-	public String getImage() {
+	public DBFile getImage() {
 		return image;
 	}
 
-	public void setImage(String image) {
+	public void setImage(DBFile image) {
 		this.image = image;
 	}
 

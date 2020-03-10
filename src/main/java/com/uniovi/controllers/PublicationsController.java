@@ -10,10 +10,15 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.uniovi.UploadFileResponse;
+import com.uniovi.entities.DBFile;
 import com.uniovi.entities.Publication;
 import com.uniovi.entities.User;
 import com.uniovi.services.PublicationsService;
+import com.uniovi.services.StorageService;
 import com.uniovi.services.UsersService;
 import com.uniovi.validators.PublicationsValidator;
 
@@ -23,6 +28,9 @@ import org.springframework.data.domain.Pageable;
 
 @Controller
 public class PublicationsController {
+
+	@Autowired
+	private StorageService storageService;
 
 	@Autowired // Inyectar el servicio
 	private PublicationsService publicationsService;
@@ -38,22 +46,22 @@ public class PublicationsController {
 		String email = principal.getName();
 		User user = usersService.getUserByEmail(email);
 		Page<Publication> publications = new PageImpl<Publication>(new LinkedList<Publication>());
-		
+
 		publications = publicationsService.getPublicationsForUser(pageable, user);
-		
+
 		model.addAttribute("publicationList", publications.getContent());
 		model.addAttribute("page", publications);
 		return "publication/list";
 	}
-	
+
 	@RequestMapping("/publication/list/{email}")
 	public String getListFriend(Model model, Pageable pageable, Principal principal, @PathVariable String email) {
-		
+
 		User user = usersService.getUserByEmail(email);
 		Page<Publication> publications = new PageImpl<Publication>(new LinkedList<Publication>());
-		
+
 		publications = publicationsService.getPublicationsForUser(pageable, user);
-		
+
 		model.addAttribute("publicationList", publications.getContent());
 		model.addAttribute("page", publications);
 		return "publication/list";
@@ -61,16 +69,19 @@ public class PublicationsController {
 
 	@RequestMapping(value = "/publication/add", method = RequestMethod.POST)
 	public String setPublication(Principal principal, @Validated Publication publication, BindingResult result) {
+		System.err.println(publication.getImage());
+		// DBFile dbFile = storageService.storeFile(publication.getImage());
+
 		publicationsValidator.validate(publication, result);
 		if (result.hasErrors()) {
 			return "/publication/add";
 		}
-		
+
 		User user = usersService.getUserByEmail(principal.getName());
-		
+
 		publication.setUser(user);
 		publication.setDate(new Date());
-		
+
 		publicationsService.addPublication(publication);
 		return "redirect:/publication/list";
 	}
@@ -79,5 +90,25 @@ public class PublicationsController {
 	public String getPublication(Model model, Pageable pageable) {
 		model.addAttribute("publication", new Publication());
 		return "publication/add";
+	}
+
+	@RequestMapping(value = "/uploadFile")
+	public String uploadFile(Principal principal, @RequestParam("file") MultipartFile image,
+			@RequestParam("text") String text, @RequestParam("title") String title) {
+		DBFile dbFile = storageService.storeFile(image);
+
+		User user = usersService.getUserByEmail(principal.getName());
+		System.err.println(principal.getName());
+
+		Publication publication = new Publication();
+		publication.setUser(user);
+		publication.setDate(new Date());
+		publication.setText(text);
+		publication.setTitle(title);
+		publication.setImage(dbFile);
+
+		publicationsService.addPublication(publication);
+
+		return "redirect:/publication/list";
 	}
 }
