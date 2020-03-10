@@ -108,6 +108,6 @@ public class PublicationsController {
 
 		publicationsService.addPublication(publication);
 
-		return "redirect:/user/list";
+		return "redirect:/publication/list";
 	}
 }
