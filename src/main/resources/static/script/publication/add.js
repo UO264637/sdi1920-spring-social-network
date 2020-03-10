@@ -19,6 +19,7 @@ function uploadSingleFile(file, text, title) {
     }
 
     xhr.send(formData);
+    console.log("DONE1");
 }
 
 singleUploadForm.addEventListener('submit', function(event){
@@ -29,7 +30,9 @@ singleUploadForm.addEventListener('submit', function(event){
     }
     else {
     	uploadSingleFile(files[0], text, title);
-    	event.preventDefault();
+    	//event.preventDefault();
+    	console.log("DONE2");
     }
+    console.log("DONE3");
 }, true);
 

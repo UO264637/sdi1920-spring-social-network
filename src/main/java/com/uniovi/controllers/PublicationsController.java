@@ -98,7 +98,6 @@ public class PublicationsController {
 		DBFile dbFile = storageService.storeFile(image);
 
 		User user = usersService.getUserByEmail(principal.getName());
-		System.err.println(principal.getName());
 
 		Publication publication = new Publication();
 		publication.setUser(user);
@@ -109,6 +108,6 @@ public class PublicationsController {
 
 		publicationsService.addPublication(publication);
 
-		return "redirect:/publication/list";
+		return "redirect:/user/list";
 	}
 }
