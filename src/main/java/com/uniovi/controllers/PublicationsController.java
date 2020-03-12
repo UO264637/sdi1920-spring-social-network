@@ -1,5 +1,6 @@
 package com.uniovi.controllers;
 
+import java.io.ByteArrayInputStream;
 import java.security.Principal;
 import java.util.Date;
 import java.util.LinkedList;
@@ -48,6 +49,11 @@ public class PublicationsController {
 		Page<Publication> publications = new PageImpl<Publication>(new LinkedList<Publication>());
 
 		publications = publicationsService.getPublicationsForUser(pageable, user);
+		
+		for (Publication publication:publications) {
+			byte[] bytes = publication.getImage().getData();
+			publication.setIs(new ByteArrayInputStream(bytes));
+		}
 
 		model.addAttribute("publicationList", publications.getContent());
 		model.addAttribute("page", publications);
@@ -67,7 +73,7 @@ public class PublicationsController {
 		return "publication/list";
 	}
 
-	@RequestMapping(value = "/publication/add", method = RequestMethod.POST)
+/*	@RequestMapping(value = "/publication/add", method = RequestMethod.POST)
 	public String setPublication(Principal principal, @Validated Publication publication, BindingResult result) {
 		System.err.println(publication.getImage());
 		// DBFile dbFile = storageService.storeFile(publication.getImage());
@@ -84,7 +90,7 @@ public class PublicationsController {
 
 		publicationsService.addPublication(publication);
 		return "redirect:/publication/list";
-	}
+	}*/
 
 	@RequestMapping(value = "/publication/add")
 	public String getPublication(Model model, Pageable pageable) {

@@ -1,5 +1,6 @@
 package com.uniovi.entities;
 
+import java.io.InputStream;
 import java.util.Date;
 
 import javax.persistence.*;
@@ -15,6 +16,9 @@ public class Publication {
 	@OneToOne
     @JoinColumn(name = "FK_IMAGE")
 	private DBFile image;
+	
+	@Transient
+	private InputStream is;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
@@ -78,6 +82,14 @@ public class Publication {
 
 	public void setImage(DBFile image) {
 		this.image = image;
+	}
+	
+	public InputStream getIs() {
+		return is;
+	}
+
+	public void setIs(InputStream is) {
+		this.is = is;
 	}
 
 	@Override
