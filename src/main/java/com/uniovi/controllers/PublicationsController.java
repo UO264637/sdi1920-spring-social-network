@@ -48,11 +48,11 @@ public class PublicationsController {
 
 		publications = publicationsService.getPublicationsForUser(pageable, user);
 		
-		for (Publication publication:publications) 
-			if (publication.getImage() != null){
-				byte[] bytes = publication.getImage().getData();
-				publication.setIs(new ByteArrayInputStream(bytes));
-			}
+//		for (Publication publication:publications) 
+//			if (publication.getImage() != null){
+//				byte[] bytes = publication.getImage().getData();
+//				publication.setIs(new ByteArrayInputStream(bytes));
+//			}
 
 		model.addAttribute("publicationList", publications.getContent());
 		model.addAttribute("page", publications);

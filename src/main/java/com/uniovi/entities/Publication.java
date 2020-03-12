@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import org.apache.tomcat.util.codec.binary.Base64;
+
 @Entity
 public class Publication {
 	@Id
@@ -95,6 +97,21 @@ public class Publication {
 	public String toString() {
 		return "Publication [id=" + id + ", text=" + text + ", title=" + title + ", date=" + date + ", user=" + user
 				+ "]";
+	}
+	
+	/**
+	 * Transforms the image to Base64 to be displayed
+	 * @return image in base64
+	 */
+	public String generateBase64Image() {
+	    return Base64.encodeBase64String(image.getData());
+	}
+	
+	/**
+	 * @return true if the post has image
+	 */
+	public boolean hasImage() {
+		return image != null;
 	}
 
 }

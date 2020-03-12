@@ -1,7 +1,14 @@
 <div class="jumbotron">
-  <h2 class="display-4" th:text="${publication.title}">Hello, world!</h2>
-  <p class="lead bold" th:text="${publication.date}">01/01/2010</p>
-  <hr class="my-4">
-  <p th:if="${showText}" th:text="${publication.text}">The text wall goes here</p>
-  <!-- <img width="100" height="100" th:src="${publication.is}"> -->
+	<!--  Title  -->
+	<h2 class="display-4" th:text="${publication.title}">Hello, world!</h2>
+	<!--  Datee  -->
+	<p class="lead bold" th:text="${publication.date}">01/01/2010</p>
+	<!--  Text  -->
+	<hr th:if="${showText}" class="my-4">
+	<p th:if="${showText}" th:text="${publication.text}">The text wall
+		goes here</p>
+	<!--  Image  -->
+	<img class="img-thumbnail" th:if="${publication.hasImage()}"
+		width="100" height="100"
+		th:src="@{'data:image/jpeg;base64,'+${publication.generateBase64Image()}}">
 </div>

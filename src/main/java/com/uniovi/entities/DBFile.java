@@ -67,4 +67,5 @@ public class DBFile {
 	public void setPublication(Publication publication) {
 		this.publication = publication;
 	}   
+	
 }
