@@ -23,9 +23,8 @@ public class Publication {
 	public Publication() {
 	}
 
-	public Publication(Long id, String title, String text, User user) {
+	public Publication(String title, String text, User user) {
 		super();
-		this.id = id;
 		this.text = text;
 		this.title = title;
 		this.date = new Date();

@@ -165,6 +165,16 @@ public class User {
 	}
 
 	/**
+	 * Generates the publications link of the user
+	 * @return link of the publications of the user
+	 */
+	public String getPostsLink() {
+		return "/publication/list/" + this.email;
+	}
+
+	// ---------------------------------------------------------------------
+	
+	/**
 	 * Request the friendship of another user
 	 * @param requested	User to add as friend
 	 */

@@ -1,0 +1,6 @@
+<div class="jumbotron">
+  <h2 class="display-4" th:text="${publication.title}">Hello, world!</h2>
+  <p class="lead bold" th:text="${publication.date}">01/01/2010</p>
+  <hr class="my-4">
+  <p th:if="${showText}" th:text="${publication.text}">The text wall goes here</p>
+</div>
