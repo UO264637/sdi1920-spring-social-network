@@ -26,29 +26,26 @@ public class FriendsController {
 	private boolean acceptedRequest = false;
 	private boolean refusedRequest = false;
 
-	// REQUESTS
-	// ---------------------------------------------------------------------------------
+	// REQUESTS -------------------------------------------------------------------
 
 	@RequestMapping("/friends/requests")
 	public String getRequest(Model model, Pageable pageable, Principal principal) {
+		// We load the user and its requests
 		Page<Friendship> friendships = null;
-
-		String email = principal.getName();
-		User user = usersService.getUserByEmail(email);
-
+		User user = usersService.getUserByEmail(principal.getName());
 		friendships = friendshipsService.getRequests(pageable, user);
-
+		// We store the list and message conditionals
 		model.addAttribute("requestsList", friendships.getContent());
 		model.addAttribute("page", friendships);
 		model.addAttribute("acceptedRequest", acceptedRequest);
 		model.addAttribute("refusedRequest", refusedRequest);
+		// We restore the message conditionals
 		acceptedRequest = false;
 		refusedRequest = false;
 		return "friends/requests";
 	}
 
-	// ACCEPT
-	// ----------------------------------------------------------------------------------
+	// ACCEPT -------------------------------------------------------------------
 
 	@RequestMapping(value = "/friends/accept/{id}")
 	public String accept(Model model, Principal principal, @PathVariable Long id) {
@@ -64,7 +61,7 @@ public class FriendsController {
 		return "redirect:/friends/requests";
 	}
 
-	// REFUSE ----------------------------------------------------------------------------------
+	// REFUSE ------------------------------------------------------------
 
 	@RequestMapping(value = "/friends/refuse/{id}")
 	public String refuse(Model model, Principal principal, @PathVariable Long id) {
@@ -75,4 +72,28 @@ public class FriendsController {
 		refusedRequest = true;
 		return "redirect:/friends/requests";
 	}
+	
+	// LIST -----------------------------------------------------------------
+	
+	@RequestMapping(value = "/friends/list")
+	public String list(Model model, Pageable pageable, Principal principal) {
+		// We load the user and the friend list
+		Page<Friendship> friendships = null;
+		User user = usersService.getUserByEmail(principal.getName());
+		friendships = friendshipsService.getFriends(pageable, user);
+		// We store and show the list
+		model.addAttribute("friendsList", friendships.getContent());
+		model.addAttribute("page", friendships);
+		return "friends/list";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head" />
+<body>
+	<!-- Barra de Navegación superior -->
+	<nav th:replace="fragments/nav" />
+	<div class="container">
+		<!-- Cabecera -->
+		<h2 th:text="#{friends}">Amigos</h2>
+		<div class="table-responsive">
+			<!-- Tabla de peticiones de amistad -->
+			<table class="table table-hover" th:fragment="tableUsers"
+				id="tableUsers">
+				<thead>
+					<tr>
+						<th th:text="#{name}">Nombre</th>
+						<th th:text="#{surname}">Apellidos</th>
+						<th>Email</th>
+						<!-- Columna de ver posts -->
+						<th th:text="#{posts}"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="f : ${friendsList}">
+						<td th:text="${f.getRequested().getName()}">Pepe</td>
+						<td th:text="${f.getRequested().getSurname()}">Sánchez</td>
+						<td th:text="${f.getRequested().getEmail()}">pepe@sanchez.com</td>
+						<td>
+							<!-- Botón de ir a los posts -->
+							<a type="button" class="btn btn-primary" th:text="#{see}">
+								Ver
+							</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<footer th:replace="fragments/pagination" />
+	</div>
+	<footer th:replace="fragments/footer" />
+</body>
+</html>

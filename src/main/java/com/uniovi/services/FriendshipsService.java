@@ -21,6 +21,11 @@ public class FriendshipsService {
 		Page<Friendship> friendships = friendshipRepository.findByRequestedAndPending(pageable, user, true);
 		return friendships;
 	}
+	
+	public Page<Friendship> getFriends(Pageable pageable, User user) {
+		Page<Friendship> friendships = friendshipRepository.findByRequesterAndPending(pageable, user, false);
+		return friendships;
+	}
 
 	public Friendship getFriendship(Long id) {
 		Optional<Friendship> friendship = friendshipRepository.findById(id);

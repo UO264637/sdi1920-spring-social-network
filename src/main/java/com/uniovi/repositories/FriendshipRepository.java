@@ -8,6 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface FriendshipRepository extends CrudRepository<Friendship, Long> {
 
+	Page<Friendship> findByRequesterAndPending(Pageable pageable, User requester, boolean pending);
 	Page<Friendship> findByRequestedAndPending(Pageable pageable, User requested, boolean pending);
 	
 }
