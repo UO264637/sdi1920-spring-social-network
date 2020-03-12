@@ -1,6 +1,7 @@
 package com.uniovi.services;
 
 import com.uniovi.entities.Friendship;
+import com.uniovi.entities.Publication;
 import com.uniovi.entities.Role;
 import com.uniovi.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ public class InserDataSampleService {
 	private RolesService rolesService;
 	@Autowired
 	private UsersService usersService;
+	@Autowired
+	private PublicationsService publicationsService;
 
 	@PostConstruct
 	public void init() {
@@ -74,6 +77,24 @@ public class InserDataSampleService {
 		usersService.updateUser(user3);
 		user4.requestFriendship(user5);
 		usersService.updateUser(user4);
+		
+		// Publications creation
+		Publication publication1 = new Publication("Title1", "Text1", user1);
+		publicationsService.addPublication(publication1);
+		Publication publication2 = new Publication("Title2", "Text2", user2);
+		publicationsService.addPublication(publication2);
+		Publication publication3 = new Publication("Title3", "Text3", user3);
+		publicationsService.addPublication(publication3);
+		Publication publication4 = new Publication("Title4", "Text4", user4);
+		publicationsService.addPublication(publication4);
+		Publication publication5 = new Publication("Title5", "Text5", user5);
+		publicationsService.addPublication(publication5);
+		Publication publication6 = new Publication("Title6", "Text6", user6);
+		publicationsService.addPublication(publication6);
+		Publication publication7 = new Publication("Title7", "Text7", user1);
+		publicationsService.addPublication(publication7);
+		Publication publication8 = new Publication("Title8", "Text8", user2);
+		publicationsService.addPublication(publication8);
 	}
 	
 	@Transactional

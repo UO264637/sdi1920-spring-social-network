@@ -12,9 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.uniovi.UploadFileResponse;
 import com.uniovi.entities.DBFile;
 import com.uniovi.entities.Publication;
 import com.uniovi.entities.User;
@@ -50,26 +48,33 @@ public class PublicationsController {
 
 		publications = publicationsService.getPublicationsForUser(pageable, user);
 		
-		for (Publication publication:publications) {
-			byte[] bytes = publication.getImage().getData();
-			publication.setIs(new ByteArrayInputStream(bytes));
-		}
+		for (Publication publication:publications) 
+			if (publication.getImage() != null){
+				byte[] bytes = publication.getImage().getData();
+				publication.setIs(new ByteArrayInputStream(bytes));
+			}
 
 		model.addAttribute("publicationList", publications.getContent());
 		model.addAttribute("page", publications);
+		model.addAttribute("showText", false);
 		return "publication/list";
 	}
 
 	@RequestMapping("/publication/list/{email}")
 	public String getListFriend(Model model, Pageable pageable, Principal principal, @PathVariable String email) {
-
-		User user = usersService.getUserByEmail(email);
+		// We load the intended user and the friend
+		User user = usersService.getUserByEmail(principal.getName());
+		User friend = usersService.getUserByEmail(email);
+		// If they are not friends, we redirect the user to the home
+		if (!user.isFriend(friend))
+			return "redirect:/";
+		// If they are friends we load and store the publications
 		Page<Publication> publications = new PageImpl<Publication>(new LinkedList<Publication>());
-
-		publications = publicationsService.getPublicationsForUser(pageable, user);
+		publications = publicationsService.getPublicationsForUser(pageable, friend);
 
 		model.addAttribute("publicationList", publications.getContent());
 		model.addAttribute("page", publications);
+		model.addAttribute("showText", true);
 		return "publication/list";
 	}
 

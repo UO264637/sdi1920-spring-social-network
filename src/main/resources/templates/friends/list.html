@@ -14,20 +14,24 @@
 				<thead>
 					<tr>
 						<th th:text="#{name}">Nombre</th>
-						<th th:text="#{surname}">Apellidos</th>
 						<th>Email</th>
+						<th></th>
 						<!-- Columna de ver posts -->
 						<th th:text="#{posts}"></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="f : ${friendsList}">
-						<td th:text="${f.getRequested().getName()}">Pepe</td>
-						<td th:text="${f.getRequested().getSurname()}">Sánchez</td>
+						<td>
+							<a th:text="${f.getRequested().getFullName()}"
+								th:href="${f.getRequested().getPostsLink()}">Pepe</a>
+						</td>
 						<td th:text="${f.getRequested().getEmail()}">pepe@sanchez.com</td>
+						<td></td>
 						<td>
 							<!-- Botón de ir a los posts -->
-							<a type="button" class="btn btn-primary" th:text="#{see}">
+							<a type="button" class="btn btn-primary" th:text="#{see}"
+								th:href="${f.getRequested().getPostsLink()}">
 								Ver
 							</a>
 						</td>
