@@ -27,6 +27,7 @@ singleUploadForm.addEventListener('submit', function(event){
     var text = textInput.value;
     var title = titleInput.value;
     if(files.length === 0) {
+    	uploadSingleFile(null, text, title);
     }
     else {
     	uploadSingleFile(files[0], text, title);

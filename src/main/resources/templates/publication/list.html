@@ -15,12 +15,14 @@
 					<tr>
 						<th th:text="#{publication.title}">Título:</th>
 						<th th:text="#{publication.date}">Fecha:</th>
+						<th th:text="#{publication.image}">Imagen:</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="publication : ${publicationList}">
 						<td th:text="${publication.title}">Título</td>
 						<td th:text="${publication.date}">Fecha</td>
+						<td><img width="100" height="100" th:src="${publication.is}"></td>
 					</tr>
 				</tbody>
 			</table>
