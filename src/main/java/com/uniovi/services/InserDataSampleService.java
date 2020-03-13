@@ -74,8 +74,7 @@ public class InserDataSampleService {
 		usersService.updateUser(user1);
 		user2.requestFriendship(user3);
 		usersService.updateUser(user2);
-		user3.requestFriendship(user4);
-		usersService.updateUser(user3);
+		user4.requestFriendship(user3);
 		user4.requestFriendship(user5);
 		usersService.updateUser(user4);
 		
