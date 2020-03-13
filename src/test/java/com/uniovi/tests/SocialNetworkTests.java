@@ -4,6 +4,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.junit.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -217,6 +219,7 @@ public class SocialNetworkTests {
 	 * PR15 - Send a frienship request, check it is listed to the other user
 	 */
 	@Test
+	@Transactional
 	public void PR15() {
 		// We log as user
 		logAs("rachel@friends.com", "123");
@@ -224,8 +227,7 @@ public class SocialNetworkTests {
 		// And request a new friend, we'll use Ross
 		By enlace = By.xpath("//td[contains(text(), 'Ross')]/following-sibling::*[3]");
 		driver.findElement(enlace).click();
-		List<WebElement> alert = SeleniumUtils.EsperaCargaPagina(driver, "class", "alert",
-				PO_View.getTimeout());
+		List<WebElement> alert = SeleniumUtils.EsperaCargaPagina(driver, "class", "alert", PO_View.getTimeout());
 		assertTrue(alert.size() == 1);
 		alert.get(0).click();
 		// We log in as Ross
@@ -241,8 +243,7 @@ public class SocialNetworkTests {
 		assertTrue(elementos.size() == 1);
 		elementos.get(0).click();
 		// It should have only one friend request
-		List<WebElement> requests = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
-				PO_View.getTimeout());
+		List<WebElement> requests = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", PO_View.getTimeout());
 		assertTrue(requests.size() == 1);
 	}
 
@@ -250,8 +251,15 @@ public class SocialNetworkTests {
 	 * PR16 - Try to send a frienship request to an already requested user
 	 */
 	@Test
+	@Transactional
 	public void PR16() {
-		// TODO
+		// We log as user
+		logAs("rachel@friends.com", "123");
+		SeleniumUtils.esperarSegundos(driver, 1);
+		// And request a new friend, we'll use Ross
+		By enlace = By.xpath("//td[contains(text(), 'Monica')]/following-sibling::*[3]");
+		driver.findElement(enlace).click();
+		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "solicitado", PO_View.getTimeout());
 	}
 
 	/********************************************************************************
@@ -435,7 +443,7 @@ public class SocialNetworkTests {
 	@Test
 	public void PR31() {
 		logAs("admin@email.com", "admin");
-		//TODO
+		// TODO
 	}
 
 	/********************************************************************************
@@ -450,7 +458,7 @@ public class SocialNetworkTests {
 	@Test
 	public void PR32() {
 		logAs("admin@email.com", "admin");
-		//TODO
+		// TODO
 	}
 
 	/**
@@ -460,7 +468,7 @@ public class SocialNetworkTests {
 	@Test
 	public void PR33() {
 		logAs("admin@email.com", "admin");
-		//TODO
+		// TODO
 	}
 
 	/**
@@ -470,7 +478,7 @@ public class SocialNetworkTests {
 	@Test
 	public void PR34() {
 		logAs("admin@email.com", "admin");
-		//TODO
+		// TODO
 	}
 
 	/********************************************************************************
@@ -486,5 +494,5 @@ public class SocialNetworkTests {
 		// Comprobamos que entramos en la pagina privada de Alumno
 		PO_View.checkElement(driver, "id", "userHeader");
 	}
-	
+
 }
