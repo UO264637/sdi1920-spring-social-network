@@ -304,7 +304,21 @@ public class SocialNetworkTests {
 	 */
 	@Test
 	public void PR17() {
-		// TODO
+		// We log as user
+		logAs("monica@friends.com", "123");
+		SeleniumUtils.esperarSegundos(driver, 1);
+		// And look how many friend requests it has
+		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "friends-menu",
+				PO_View.getTimeout());
+		assertTrue(elementos.size() == 1);
+		elementos.get(0).click();
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//*[@id=\"friends-menu\"]/ul/li[1]/a",
+				PO_View.getTimeout());
+		assertTrue(elementos.size() == 1);
+		elementos.get(0).click();
+		// It should have only three pending friend requests
+		List<WebElement> requests = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", PO_View.getTimeout());
+		assertTrue(requests.size() == 3);
 	}
 
 	/********************************************************************************
