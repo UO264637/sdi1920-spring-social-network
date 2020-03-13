@@ -34,6 +34,7 @@ public class InserDataSampleService {
 		// Admin user creation
 		User userAdmin = new User("admin@email.com", "Admin", "Admin");
 		userAdmin.setRole(admin);
+		userAdmin.setPassword("admin");
 		usersService.addUser(userAdmin);
 		
 		// Insertion of testing data, it should be commented or edited when deployed
