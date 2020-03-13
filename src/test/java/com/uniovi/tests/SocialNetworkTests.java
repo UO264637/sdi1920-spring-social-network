@@ -1,12 +1,19 @@
 package com.uniovi.tests;
 
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
+
 import org.junit.*;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import com.uniovi.tests.pageobjects.PO_HomeView;
 import com.uniovi.tests.pageobjects.PO_LoginView;
 import com.uniovi.tests.pageobjects.PO_View;
+import com.uniovi.tests.util.SeleniumUtils;
 
 import org.junit.runners.MethodSorters;
 
@@ -211,7 +218,32 @@ public class SocialNetworkTests {
 	 */
 	@Test
 	public void PR15() {
-		// TODO
+		// We log as user
+		logAs("rachel@friends.com", "123");
+		SeleniumUtils.esperarSegundos(driver, 1);
+		// And request a new friend, we'll use Ross
+		By enlace = By.xpath("//td[contains(text(), 'Ross')]/following-sibling::*[3]");
+		driver.findElement(enlace).click();
+		List<WebElement> alert = SeleniumUtils.EsperaCargaPagina(driver, "class", "alert",
+				PO_View.getTimeout());
+		assertTrue(alert.size() == 1);
+		alert.get(0).click();
+		// We log in as Ross
+		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+		logAs("ross@friends.com", "123");
+		// And look how many friend requests it has
+		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "friends-menu",
+				PO_View.getTimeout());
+		assertTrue(elementos.size() == 1);
+		elementos.get(0).click();
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//*[@id=\"friends-menu\"]/ul/li[1]/a",
+				PO_View.getTimeout());
+		assertTrue(elementos.size() == 1);
+		elementos.get(0).click();
+		// It should have only one friend request
+		List<WebElement> requests = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
+				PO_View.getTimeout());
+		assertTrue(requests.size() == 1);
 	}
 
 	/**
@@ -450,7 +482,7 @@ public class SocialNetworkTests {
 		// Vamos al formulario de logueo.
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		// Rellenamos el formulario
-		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
+		PO_LoginView.fillForm(driver, email, password);
 		// Comprobamos que entramos en la pagina privada de Alumno
 		PO_View.checkElement(driver, "id", "userHeader");
 	}
