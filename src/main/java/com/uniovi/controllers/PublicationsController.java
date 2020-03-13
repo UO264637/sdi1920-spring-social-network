@@ -1,6 +1,5 @@
 package com.uniovi.controllers;
 
-import java.io.ByteArrayInputStream;
 import java.security.Principal;
 import java.util.Date;
 import java.util.LinkedList;
@@ -8,8 +7,6 @@ import java.util.LinkedList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,7 +16,7 @@ import com.uniovi.entities.User;
 import com.uniovi.services.PublicationsService;
 import com.uniovi.services.StorageService;
 import com.uniovi.services.UsersService;
-import com.uniovi.validators.PublicationsValidator;
+//import com.uniovi.validators.PublicationsValidator;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -37,8 +34,8 @@ public class PublicationsController {
 	@Autowired
 	private UsersService usersService;
 
-	@Autowired
-	private PublicationsValidator publicationsValidator;
+//	@Autowired
+//	private PublicationsValidator publicationsValidator;
 
 	@RequestMapping("/publication/list")
 	public String getList(Model model, Pageable pageable, Principal principal) {

@@ -20,12 +20,12 @@ import org.junit.runners.MethodSorters;
 public class SocialNetworkTests {
 	
 	// CARMEN
-	static String PathFirefox65 = "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe";
-	static String Geckdriver024 = "D:\\UNI\\Tercero\\SDI\\Sesion 5\\Material\\geckodriver024win64.exe";
+//	static String PathFirefox65 = "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe";
+//	static String Geckdriver024 = "D:\\UNI\\Tercero\\SDI\\Sesion 5\\Material\\geckodriver024win64.exe";
 	
-	// RICHI pon tus cosillas aquí
-	//static String PathFirefox65 = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-	//static String Geckdriver024 = "C:\\Users\\UO264637\\Desktop\\SDI2\\geckodriver024win64.exe";
+	// RICHI
+	static String PathFirefox65 = "D:\\Mozilla Firefox\\firefox.exe";
+	static String Geckdriver024 = "E:\\Clase\\SDI\\Material\\PL-SDI-Sesión5-material\\geckodriver024win64.exe";
 	
 	static WebDriver driver = getDriver(PathFirefox65, Geckdriver024);
 	static String URL = "http://localhost:8090";
