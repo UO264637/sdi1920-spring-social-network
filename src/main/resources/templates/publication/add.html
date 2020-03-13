@@ -15,7 +15,7 @@
 					th:text="#{publication.title}">Título:</label>
 				<div class="col-sm-10">
 					<input id="titleInput" type="text" class="form-control" name="title"
-						placeholder="Título" required="true" /> <span class="text-danger"
+						placeholder="Título"/> <span class="text-danger"
 						th:if="${#fields.hasErrors('title')}" th:errors="*{title}">
 				</div>
 			</div>
@@ -23,8 +23,7 @@
 				<label class="control-label col-sm-2" for="text"
 					th:text="#{publication.text}">Texto:</label>
 				<div class="col-sm-10">
-					<textarea id="textInput"  type="text" class="form-control" name="text" placeholder=""
-						required="true" ></textarea> <span class="text-danger"
+					<textarea id="textInput"  type="text" class="form-control" name="text" placeholder=""></textarea> <span class="text-danger"
 						th:if="${#fields.hasErrors('text')}" th:errors="*{text}">
 				</div>
 			</div>
