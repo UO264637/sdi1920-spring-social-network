@@ -101,18 +101,21 @@ public class PublicationsController {
 	}
 
 	@RequestMapping(value = "/uploadFile")
-	public String uploadFile(Principal principal, @RequestParam("file") MultipartFile image,
+	public String uploadFile(Principal principal, @RequestParam(value = "file", required=false) MultipartFile image,
 			@RequestParam("text") String text, @RequestParam("title") String title) {
-		DBFile dbFile = storageService.storeFile(image);
+		Publication publication = new Publication();
+		
+		if (image != null) {
+			DBFile dbFile = storageService.storeFile(image);
+			publication.setImage(dbFile);
+		}
 
 		User user = usersService.getUserByEmail(principal.getName());
 
-		Publication publication = new Publication();
 		publication.setUser(user);
 		publication.setDate(new Date());
 		publication.setText(text);
 		publication.setTitle(title);
-		publication.setImage(dbFile);
 
 		publicationsService.addPublication(publication);
 

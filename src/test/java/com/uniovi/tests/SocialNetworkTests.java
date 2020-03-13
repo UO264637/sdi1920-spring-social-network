@@ -346,7 +346,28 @@ public class SocialNetworkTests {
 	 */
 	@Test
 	public void PR24() {
-		// TODO
+		logAs("rachel@friends.com", "123");
+		
+		// Go to Add Publication
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'publications-menu')]/a");
+		elementos.get(0).click();
+		
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'publication/add')]");
+		elementos.get(0).click();
+		
+		// Fill form
+		PO_PrivateView.fillFormAddPublication(driver, "Publicación 1", "Ejemplo de publicación");
+		
+		// Go to List publications
+		elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'publications-menu')]/a");
+		elementos.get(0).click();
+		
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'publication/list')]");
+		elementos.get(0).click();
+
+		elementos = PO_View.checkElement(driver, "text", "Publicación 1");
+
+		PO_PrivateView.clickOption(driver, "logout", "text", "Login");
 	}
 
 	/**
@@ -355,7 +376,21 @@ public class SocialNetworkTests {
 	 */
 	@Test
 	public void PR25() {
-		// TODO
+		logAs("rachel@friends.com", "123");
+				
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'publications-menu')]/a");
+		elementos.get(0).click();
+		
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'publication/add')]");
+		elementos.get(0).click();
+		
+		
+		PO_PrivateView.fillFormAddPublication(driver, "", "Ejemplo de publicación");
+		PO_View.getP();
+		PO_RegisterView.checkKey(driver, "Error.publication.title.length", PO_Properties.getSPANISH());
+		
+		// Ahora nos desconectamos
+		PO_PrivateView.clickOption(driver, "logout", "text", "Login");
 	}
 
 	/********************************************************************************
