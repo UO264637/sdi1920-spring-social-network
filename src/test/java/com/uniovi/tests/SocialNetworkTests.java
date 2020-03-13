@@ -232,21 +232,6 @@ public class SocialNetworkTests {
 		// TODO
 	}
 
-
-	/********************************************************************************
-	 * INTERNATIONALIZATION TESTS
-	 * 
-	 ********************************************************************************/
-
-	/**
-	 * PR20 - Visualize at least four pages in Spanish/English/Spanish Checking some
-	 * labels change to the correspondent language
-	 */
-	@Test
-	public void PR20() {
-		// TODO
-	}
-
 	/********************************************************************************
 	 * SECURITY TESTS
 	 * 
