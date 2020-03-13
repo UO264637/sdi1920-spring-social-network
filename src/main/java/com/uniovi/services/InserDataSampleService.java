@@ -70,6 +70,7 @@ public class InserDataSampleService {
 		user1.acceptFriendship((Friendship) user2.getFriendshipsReceived().toArray()[0]);		// pero que feo coño, ya haré otro método mejor, creo
 		user1.requestFriendship(user3);
 		user1.requestFriendship(user4);
+		user1.acceptFriendship((Friendship) user4.getFriendshipsReceived().toArray()[0]);
 		user1.requestFriendship(user5);
 		usersService.updateUser(user1);
 		user2.requestFriendship(user3);

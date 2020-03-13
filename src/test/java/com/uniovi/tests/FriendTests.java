@@ -188,7 +188,22 @@ public class FriendTests {
 	 */
 	@Test
 	public void PR19() {
-		// TODO
+		// We log as user
+		logAs("rachel@friends.com", "123");
+		SeleniumUtils.esperarSegundos(driver, 1);
+		// And go to the friends
+		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "friends-menu",
+				PO_View.getTimeout());
+		assertTrue(elementos.size() == 1);
+		elementos.get(0).click();
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//*[@id=\"friends-menu\"]/ul/li[2]/a",
+				PO_View.getTimeout());
+		assertTrue(elementos.size() == 1);
+		elementos.get(0).click();
+		// It should have only two friends
+		List<WebElement> requests = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", PO_View.getTimeout());
+		assertTrue(requests.size() == 2);
+
 	}
 
 	/********************************************************************************
