@@ -1,5 +1,6 @@
 package com.uniovi.services;
 
+import com.uniovi.entities.DBFile;
 import com.uniovi.entities.Friendship;
 import com.uniovi.entities.Publication;
 import com.uniovi.entities.Role;
@@ -67,7 +68,7 @@ public class InserDataSampleService {
 		
 		// Frienships creation
 		user1.requestFriendship(user2);
-		user1.acceptFriendship((Friendship) user2.getFriendshipsReceived().toArray()[0]);		// pero que feo coño, ya haré otro método mejor, creo
+		user1.acceptFriendship((Friendship) user2.getFriendshipsReceived().toArray()[0]);
 		user1.requestFriendship(user3);
 		user1.requestFriendship(user4);
 		user1.acceptFriendship((Friendship) user4.getFriendshipsReceived().toArray()[0]);
@@ -83,6 +84,8 @@ public class InserDataSampleService {
 		Publication publication1 = new Publication("Title1", "Text1", user1);
 		publicationsService.addPublication(publication1);
 		Publication publication2 = new Publication("Title2", "Text2", user2);
+		byte[] data = {2,3,3};
+        publication2.setImage(new DBFile("unknown.png", "image/png", data));
 		publicationsService.addPublication(publication2);
 		Publication publication3 = new Publication("Title3", "Text3", user3);
 		publicationsService.addPublication(publication3);

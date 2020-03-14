@@ -236,11 +236,11 @@ public class SocialNetworkTests {
 		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'publication/list')]");
 		elementos.get(0).click();
 		
-		// Check she has 2 publications
+		// Check she has 3 publications (2 + 1)
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
 				PO_View.getTimeout());
-		assertTrue(elementos.size() == 2);
-		
+		assertTrue(elementos.size() == 3);
+
 		PO_View.checkElement(driver, "text", "Title1");
 		PO_View.checkElement(driver, "text", "Title7");
 	}
@@ -302,7 +302,18 @@ public class SocialNetworkTests {
 	 */
 	@Test
 	public void PR29() {
-		// TODO
+		logAs("chandler@friends.com", "123");
+		
+		// Go to List Friends
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'publications-menu')]/a");
+		elementos.get(0).click();
+		
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'publication/list')]");
+		elementos.get(0).click();
+				
+		// has an image in one post
+		elementos = PO_View.checkElement(driver, "class", "img-thumbnail");
+		assertTrue(elementos.size() == 1);
 	}
 
 	/**
@@ -311,7 +322,34 @@ public class SocialNetworkTests {
 	 */
 	@Test
 	public void PR30() {
-		// TODO
+		logAs("phoebe@friends.com", "123");
+		
+		// Go to Add Publication
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'publications-menu')]/a");
+		elementos.get(0).click();
+		
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'publication/add')]");
+		elementos.get(0).click();
+		
+		// Fill form
+		PO_PrivateView.fillFormAddPublication(driver, "Publicación 1", "Ejemplo de publicación");
+		
+		// Go to List publications
+		elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'publications-menu')]/a");
+		elementos.get(0).click();
+		
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'publication/list')]");
+		elementos.get(0).click();
+
+		elementos = PO_View.checkElement(driver, "text", "Publicación 1");
+
+		// Check there are no images
+		try {
+			elementos = PO_View.checkElement(driver, "class", "img-thumbnail");
+			fail();
+		} catch (Exception e) {
+			
+		}
 	}
 
 	/********************************************************************************

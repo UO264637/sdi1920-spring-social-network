@@ -16,7 +16,7 @@ public class Publication {
 	private String text;
 	private String title;
 	private LocalDateTime date;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "FK_IMAGE")
 	private DBFile image;
 	

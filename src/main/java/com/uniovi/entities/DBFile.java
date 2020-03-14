@@ -12,7 +12,7 @@ public class DBFile {
 
     private String fileType;
     
-    @OneToOne(mappedBy = "image", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "image")
     private Publication publication;
 
     @Lob
