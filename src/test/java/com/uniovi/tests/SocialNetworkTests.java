@@ -227,7 +227,22 @@ public class SocialNetworkTests {
 	 */
 	@Test
 	public void PR26() {
-		// TODO
+		logAs("rachel@friends.com", "123");
+		
+		// Go to List Publication
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'publications-menu')]/a");
+		elementos.get(0).click();
+		
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'publication/list')]");
+		elementos.get(0).click();
+		
+		// Check she has 2 publications
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
+				PO_View.getTimeout());
+		assertTrue(elementos.size() == 2);
+		
+		PO_View.checkElement(driver, "text", "Title1");
+		PO_View.checkElement(driver, "text", "Title7");
 	}
 
 	/********************************************************************************
@@ -240,7 +255,27 @@ public class SocialNetworkTests {
 	 */
 	@Test
 	public void PR27() {
-		// TODO
+		logAs("rachel@friends.com", "123");
+		
+		// Go to List Friends
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'friends-menu')]/a");
+		elementos.get(0).click();
+		
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'friends/list')]");
+		elementos.get(0).click();
+		
+		// Go to Phoebe publicatios
+		elementos = PO_View.checkElement(driver, "free",
+		"//td[contains(text(), 'phoebe')]/following-sibling::*/a[contains(@class,'btn')]");
+		System.out.println(elementos.size());
+		elementos.get(0).click();
+				
+		// Check Phoebe has 1 publication
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
+				PO_View.getTimeout());
+		assertTrue(elementos.size() == 1);
+		
+		PO_View.checkElement(driver, "text", "Title4");
 	}
 
 	/**
@@ -249,7 +284,11 @@ public class SocialNetworkTests {
 	 */
 	@Test
 	public void PR28() {
-		// TODO
+		logAs("rachel@friends.com", "123");
+		
+		driver.navigate().to("http://localhost:8090/publication/list/ross@friends.com");
+		
+		PO_View.checkElement(driver, "text", "Bienvenido a la página");
 	}
 
 	/********************************************************************************
