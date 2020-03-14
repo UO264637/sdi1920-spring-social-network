@@ -319,7 +319,27 @@ public class SocialNetworkTests {
 	@Test
 	public void PR31() {
 		logAs("admin@email.com", "admin");
-		// TODO
+
+		// Contamos el número de filas de notas
+		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
+				PO_View.getTimeout());
+		// Todos menos el admin y ross que está en la siguiente pagina (Chandler, Monica, Phoebe, Joey y Rachel)
+		assertTrue(elementos.size() == 5);
+		PO_View.checkElement(driver, "text", "Rachel");
+		PO_View.checkElement(driver, "text", "Phoebe");
+		PO_View.checkElement(driver, "text", "Chandler");
+		PO_View.checkElement(driver, "text", "Monica");
+		PO_View.checkElement(driver, "text", "Joey");
+		
+		// Vamos a la siguiente página
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@class,'page-link')]");
+		elementos.get(3).click();
+
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
+				PO_View.getTimeout());
+		assertTrue(elementos.size() == 1);
+		
+		PO_View.checkElement(driver, "text", "Ross");
 	}
 
 	/********************************************************************************
