@@ -121,7 +121,6 @@ public class Publication {
 	public String printDate() {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDate = this.date.format(formatter);
-		System.out.print(formattedDate);
 		return formattedDate;
 	}
 
