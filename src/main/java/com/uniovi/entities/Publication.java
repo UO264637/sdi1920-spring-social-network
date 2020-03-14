@@ -1,7 +1,8 @@
 package com.uniovi.entities;
 
 import java.io.InputStream;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.*;
 
@@ -14,7 +15,7 @@ public class Publication {
 	private Long id;
 	private String text;
 	private String title;
-	private Date date;
+	private LocalDateTime date;
 	@OneToOne
     @JoinColumn(name = "FK_IMAGE")
 	private DBFile image;
@@ -33,7 +34,7 @@ public class Publication {
 		super();
 		this.text = text;
 		this.title = title;
-		this.date = new Date();
+		this.date = LocalDateTime.now();
 		this.user = user;
 	}
 
@@ -61,11 +62,11 @@ public class Publication {
 		this.title = title;
 	}
 
-	public Date getDate() {
+	public LocalDateTime getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
 
@@ -112,6 +113,16 @@ public class Publication {
 	 */
 	public boolean hasImage() {
 		return image != null;
+	}
+	
+	/**
+	 * @return	Date formatted
+	 */
+	public String printDate() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = this.date.format(formatter);
+		System.out.print(formattedDate);
+		return formattedDate;
 	}
 
 }
