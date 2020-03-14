@@ -334,7 +334,35 @@ public class SocialNetworkTests {
 	@Test
 	public void PR32() {
 		logAs("admin@email.com", "admin");
-		// TODO
+		
+		// Comprobamos que está Rachel (Siempre aparece la primera)
+		PO_View.checkElement(driver, "text", "Rachel");
+					
+		// Borramos el primero
+		List<WebElement> elementos = PO_View.checkElement(driver, "free",
+				"//td[contains(text(), '')]/following-sibling::*/input[contains(@name,'cb')]");
+		elementos.get(0).click();
+		By boton = By.id("deleteButton");
+		driver.findElement(boton).click();
+		
+		// Comprobamos que no está Rachel pero están los otros 5
+		SeleniumUtils.textoNoPresentePagina(driver, "Rachel");
+		
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
+				PO_View.getTimeout());
+		assertTrue(elementos.size() == 5);
+		
+		// La segunda página debería estar vacía
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@class,'page-link')]");
+		elementos.get(3).click();
+
+		try {
+			elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
+			PO_View.getTimeout());
+			fail();
+		} catch (Exception e) {
+					
+		}
 	}
 
 	/**
@@ -344,7 +372,23 @@ public class SocialNetworkTests {
 	@Test
 	public void PR33() {
 		logAs("admin@email.com", "admin");
-		// TODO
+		
+		// Comprobamos que está Ross (Siempre aparece el último)
+		PO_View.checkElement(driver, "text", "Ross");
+							
+		// Borramos el último (ahora solo hay una página)
+		List<WebElement> elementos = PO_View.checkElement(driver, "free",
+				"//td[contains(text(), '')]/following-sibling::*/input[contains(@name,'cb')]");
+		elementos.get(elementos.size()-1).click();
+		By boton = By.id("deleteButton");
+		driver.findElement(boton).click();
+				
+		// Comprobamos que solo quedan 4 
+		SeleniumUtils.textoNoPresentePagina(driver, "Ross");
+			
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
+					PO_View.getTimeout());
+		assertTrue(elementos.size() == 4);
 	}
 
 	/**
@@ -354,7 +398,26 @@ public class SocialNetworkTests {
 	@Test
 	public void PR34() {
 		logAs("admin@email.com", "admin");
-		// TODO
+		
+		// Comprobamos que quedan 4 					
+		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
+							PO_View.getTimeout());
+		assertTrue(elementos.size() == 4);
+							
+		// Borramos el último (ahora solo hay una página)
+		elementos = PO_View.checkElement(driver, "free",
+				"//td[contains(text(), '')]/following-sibling::*/input[contains(@name,'cb')]");
+		elementos.get(0).click();
+		elementos.get(1).click();
+		elementos.get(2).click();
+		By boton = By.id("deleteButton");
+		driver.findElement(boton).click();
+				
+		// Comprobamos que solo quedan 4
+			
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
+					PO_View.getTimeout());
+		assertTrue(elementos.size() == 1);
 	}
 
 	/********************************************************************************
