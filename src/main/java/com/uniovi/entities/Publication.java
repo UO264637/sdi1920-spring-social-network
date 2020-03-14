@@ -28,13 +28,13 @@ public class Publication {
 	private User user;
 
 	public Publication() {
+		this.date = LocalDateTime.now();
 	}
 
 	public Publication(String title, String text, User user) {
-		super();
+		this();
 		this.text = text;
 		this.title = title;
-		this.date = LocalDateTime.now();
 		this.user = user;
 	}
 
