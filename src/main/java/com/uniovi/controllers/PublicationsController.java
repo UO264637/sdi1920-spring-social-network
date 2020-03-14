@@ -1,7 +1,6 @@
 package com.uniovi.controllers;
 
 import java.security.Principal;
-import java.util.Date;
 import java.util.LinkedList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,7 +112,6 @@ public class PublicationsController {
 		User user = usersService.getUserByEmail(principal.getName());
 
 		publication.setUser(user);
-		publication.setDate(new Date());
 		publication.setText(text);
 		publication.setTitle(title);
 

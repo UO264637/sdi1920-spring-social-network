@@ -44,9 +44,12 @@
 						<td th:text="${u.email}">pepe@gmail.com</td>
 						<td></td>
 						<td sec:authorize="hasRole('ROLE_USER')" th:if="${!user.isFriend(u)}">
-							<!-- Botón de amistad solicitada -->
-							<a type="button" class="btn btn-success" th:if="${user.isRequested(u) or u.isRequested(user)}"
+							<!-- Botón de amistad ya solicitada por el usuario -->
+							<a type="button" class="btn btn-success" th:if="${user.isRequested(u)}"
 								th:text="#{list.requested}" disabled>Solicitado</a>
+							<!-- Botón de amistad solicitada -->
+							<a type="button" class="btn btn-success" th:if="${u.isRequested(user)}"
+								th:text="#{list.requested}" href="/friends/requests">Solicitado</a>
 							<!-- Botón de solicitar amistad -->
 							<a type="button" class="btn btn-primary addButton" th:unless="${user.isRequested(u) or u.isRequested(user)}"
 								th:text="#{list.addfriend}"  th:href="${'/user/addFriend/' + u.email}" >Añadir amigo</a>

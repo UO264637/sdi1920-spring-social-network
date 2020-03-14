@@ -2,7 +2,7 @@
 	<!--  Title  -->
 	<h2 class="display-4" th:text="${publication.title}">Hello, world!</h2>
 	<!--  Datee  -->
-	<p class="lead bold" th:text="${publication.date}">01/01/2010</p>
+	<p class="lead bold" th:text="${publication.printDate()}">01/01/2010</p>
 	<!--  Text  -->
 	<hr th:if="${showText}" class="my-4">
 	<p th:if="${showText}" th:text="${publication.text}">The text wall

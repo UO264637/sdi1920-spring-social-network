@@ -94,6 +94,10 @@ public class UsersController {
 		// We load both users
 		User user = usersService.getUserByEmail(principal.getName());
 		User userToAdd = usersService.getUserByEmail(email);
+		// We check that the users are not admins
+		if (user.getRole().getName().equals("ROLE_ADMIN") ||
+				userToAdd.getRole().getName().equals("ROLE_ADMIN"))
+			return "redirect:/user/list";
 		// Then we trigger the friendship request
 		if (!user.isFriend(userToAdd) && !user.isRequested(userToAdd)) {
 			user.requestFriendship(userToAdd);

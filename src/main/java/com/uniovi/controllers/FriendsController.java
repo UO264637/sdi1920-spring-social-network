@@ -53,7 +53,7 @@ public class FriendsController {
 		User user = usersService.getUserByEmail(principal.getName());
 		Friendship friendship = friendshipsService.getFriendship(id);
 		// And we accept the friendship if they are not friends already
-		if (!user.isFriend(friendship.getRequester())) {
+		if (friendship != null && !user.isFriend(friendship.getRequester())) {
 			user.acceptFriendship(friendship);
 			usersService.updateUser(user);
 			acceptedRequest = true;
@@ -68,13 +68,15 @@ public class FriendsController {
 		// We load the friendship
 		Friendship friendship = friendshipsService.getFriendship(id);
 		// And we delete it
-		friendshipsService.remove(friendship);
-		refusedRequest = true;
+		if (friendship != null) {
+			friendshipsService.remove(friendship);
+			refusedRequest = true;
+		}
 		return "redirect:/friends/requests";
 	}
-	
+
 	// LIST -----------------------------------------------------------------
-	
+
 	@RequestMapping(value = "/friends/list")
 	public String list(Model model, Pageable pageable, Principal principal) {
 		// We load the user and the friend list
@@ -86,14 +88,5 @@ public class FriendsController {
 		model.addAttribute("page", friendships);
 		return "friends/list";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

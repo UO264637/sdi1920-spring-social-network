@@ -159,38 +159,6 @@ public class SocialNetworkTests {
 	}
 
 	/********************************************************************************
-	 * SECURITY TESTS
-	 * 
-	 ********************************************************************************/
-
-	/**
-	 * PR21 - Try to access to the list of user. We must be returned to the login
-	 * form.
-	 */
-	@Test
-	public void PR21() {
-		// TODO
-	}
-
-	/**
-	 * PR22 - Try to access the list of posts of an user. We must be returned to the
-	 * login form.
-	 */
-	@Test
-	public void PR22() {
-		// TODO
-	}
-
-	/**
-	 * PR23 - Try to access an administrator option (it could be a placeholder). It
-	 * must be warned indicating that's a prohibited action.
-	 */
-	@Test
-	public void PR23() {
-		// TODO
-	}
-
-	/********************************************************************************
 	 * NEW POST TESTS
 	 * 
 	 ********************************************************************************/
