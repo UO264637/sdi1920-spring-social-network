@@ -40,6 +40,13 @@ public class PublicationsController {
 	@Autowired
 	private PublicationsValidator publicationsValidator;
 
+	/**
+	 * Shows all the publications from the authenticated user
+	 * @param model
+	 * @param pageable
+	 * @param principal
+	 * @return "publication/list"
+	 */
 	@RequestMapping("/publication/list")
 	public String getList(Model model, Pageable pageable, Principal principal) {
 		String email = principal.getName();
@@ -54,6 +61,14 @@ public class PublicationsController {
 		return "publication/list";
 	}
 
+	/**
+	 * Shows all the publications of the user whose email is in the url
+	 * @param model
+	 * @param pageable
+	 * @param principal
+	 * @param email
+	 * @return "publication/list"
+	 */
 	@RequestMapping("/publication/list/{email}")
 	public String getListFriend(Model model, Pageable pageable, Principal principal, @PathVariable String email) {
 		// We load the intended user and the friend
@@ -72,6 +87,15 @@ public class PublicationsController {
 		return "publication/list";
 	}
 
+	/**
+	 * Creates a new publication for the authenticated user that may have an image
+	 * @param principal
+	 * @param publication
+	 * @param result
+	 * @param file
+	 * @return "redirect:/publication/list"
+	 * @throws IOException
+	 */
 	@RequestMapping(value = "/publication/add", method = RequestMethod.POST)
 	public String setPublication(Principal principal, @Validated Publication publication, BindingResult result,
 			@RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
@@ -100,6 +124,12 @@ public class PublicationsController {
 		return "redirect:/publication/list";
 	}
 
+	/**
+	 * Returns the form to create a new publication
+	 * @param model
+	 * @param pageable
+	 * @return "publication/add"
+	 */
 	@RequestMapping(value = "/publication/add")
 	public String getPublication(Model model, Pageable pageable) {
 		model.addAttribute("publication", new Publication());

@@ -12,6 +12,11 @@ public class PublicationsValidator implements Validator {
 		return Publication.class.equals(aClass);
 	}
 
+	/**
+	 * Checks in new publication:
+	 * 		title length between 5 and 24 characters
+	 * 		text between 5 and 200 characters
+	 */
 	@Override
 	public void validate(Object target, Errors errors) {
 		Publication publication = (Publication) target;

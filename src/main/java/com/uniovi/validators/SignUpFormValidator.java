@@ -16,6 +16,14 @@ public class SignUpFormValidator implements Validator {
 		return User.class.equals(aClass);
 	}
 
+	/**
+	 * Checks in new user:
+	 * 		email is not empy or withespaces
+	 * 		email is not duplicated
+	 * 		name and surname length between 3 and 24 characters
+	 * 		password between 6 and 24 characters
+	 * 		confirm password coincides with password
+	 */
 	@Override
 	public void validate(Object target, Errors errors) {
 		User user = (User) target;
@@ -29,7 +37,7 @@ public class SignUpFormValidator implements Validator {
 		if (user.getName().length() < 3 || user.getName().length() > 24) {
 			errors.rejectValue("name", "Error.signup.name.length");
 		}
-		if (user.getSurname().length() < 3 || user.getSurname().length() > 24) { // No te marginaré el apellido
+		if (user.getSurname().length() < 3 || user.getSurname().length() > 24) {
 			errors.rejectValue("surname", "Error.signup.surname.length");
 		}
 		if (user.getPassword().length() < 6 || user.getPassword().length() > 24) {

@@ -14,9 +14,6 @@ import java.util.Set;
 @Entity
 public class Role {
 
-	// move to service
-	// public final static String[] roles = { "ROLE_ADMIN", "ROLE_STANDARD" };
-
 	@Id @GeneratedValue
 	private Long id;
 

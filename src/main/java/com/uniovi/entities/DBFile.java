@@ -2,6 +2,9 @@ package com.uniovi.entities;
 
 import javax.persistence.*;
 
+/**
+ * File entity, it will store the image information that will be included in the post
+ */
 @Entity
 public class DBFile {
     @Id
