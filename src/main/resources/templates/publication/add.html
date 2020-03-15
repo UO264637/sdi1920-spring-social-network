@@ -8,14 +8,15 @@
 
 	<div class="container">
 		<h2 th:text="#{publication.add}">Añadir Publicación</h2>
-		<form id="singleUploadForm" name="singleUploadForm" class="form-horizontal" 
-			th:object="${publication}">
+		<form id="singleUploadForm" name="singleUploadForm"
+			class="form-horizontal" th:object="${publication}"
+			action="/publication/add" method="post" enctype="multipart/form-data">
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="title"
 					th:text="#{publication.title}">Título:</label>
 				<div class="col-sm-10">
-					<input id="titleInput" type="text" class="form-control" name="title"
-						placeholder="Título"/> <span class="text-danger"
+					<input id="titleInput" type="text" class="form-control"
+						name="title" placeholder="Título" /> <span class="text-danger"
 						th:if="${#fields.hasErrors('title')}" th:errors="*{title}">
 				</div>
 			</div>
@@ -23,15 +24,17 @@
 				<label class="control-label col-sm-2" for="text"
 					th:text="#{publication.text}">Texto:</label>
 				<div class="col-sm-10">
-					<textarea id="textInput"  type="text" class="form-control" name="text" placeholder=""></textarea> <span class="text-danger"
-						th:if="${#fields.hasErrors('text')}" th:errors="*{text}">
+					<textarea id="textInput" type="text" class="form-control"
+						name="text" placeholder=""></textarea>
+					<span class="text-danger" th:if="${#fields.hasErrors('text')}"
+						th:errors="*{text}">
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="text"
 					th:text="#{publication.image}">Imagen (opcional):</label>
 				<div class="col-sm-10">
-					<input id="singleFileUploadInput" type="file" class="form-control" name="image"/>
+					<input type="file" class="form-control-file" name="file" accept="image/*">
 				</div>
 			</div>
 			<div class="form-group">
@@ -44,6 +47,5 @@
 		</form>
 	</div>
 	<footer th:replace="fragments/footer" />
-	<script src="/script/publication/add.js"></script>
 </body>
 </html>

@@ -1,11 +1,14 @@
 package com.uniovi.controllers;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.LinkedList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,6 +19,7 @@ import com.uniovi.services.PublicationsService;
 import com.uniovi.services.StorageService;
 import com.uniovi.services.UsersService;
 //import com.uniovi.validators.PublicationsValidator;
+import com.uniovi.validators.PublicationsValidator;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -33,8 +37,8 @@ public class PublicationsController {
 	@Autowired
 	private UsersService usersService;
 
-//	@Autowired
-//	private PublicationsValidator publicationsValidator;
+	@Autowired
+	private PublicationsValidator publicationsValidator;
 
 	@RequestMapping("/publication/list")
 	public String getList(Model model, Pageable pageable, Principal principal) {
@@ -43,12 +47,6 @@ public class PublicationsController {
 		Page<Publication> publications = new PageImpl<Publication>(new LinkedList<Publication>());
 
 		publications = publicationsService.getPublicationsForUser(pageable, user);
-		
-//		for (Publication publication:publications) 
-//			if (publication.getImage() != null){
-//				byte[] bytes = publication.getImage().getData();
-//				publication.setIs(new ByteArrayInputStream(bytes));
-//			}
 
 		model.addAttribute("publicationList", publications.getContent());
 		model.addAttribute("page", publications);
@@ -74,49 +72,38 @@ public class PublicationsController {
 		return "publication/list";
 	}
 
-/*	@RequestMapping(value = "/publication/add", method = RequestMethod.POST)
-	public String setPublication(Principal principal, @Validated Publication publication, BindingResult result) {
-		System.err.println(publication.getImage());
-		// DBFile dbFile = storageService.storeFile(publication.getImage());
-
+	@RequestMapping(value = "/publication/add", method = RequestMethod.POST)
+	public String setPublication(Principal principal, @Validated Publication publication, BindingResult result,
+			@RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
+		
 		publicationsValidator.validate(publication, result);
 		if (result.hasErrors()) {
 			return "/publication/add";
 		}
 
 		User user = usersService.getUserByEmail(principal.getName());
-
 		publication.setUser(user);
-		publication.setDate(new Date());
+		
+		if (!file.isEmpty()) {
+            String type = file.getContentType();
+            String name = file.getName();
+            byte[] data = file.getBytes();
 
+            DBFile dbfile = new DBFile(name, type, data);
+            dbfile.setPublication(publication);
+            publication.setImage(dbfile);
+            
+            storageService.storeFile(file); 
+        }
+		
 		publicationsService.addPublication(publication);
 		return "redirect:/publication/list";
-	}*/
+	}
 
 	@RequestMapping(value = "/publication/add")
 	public String getPublication(Model model, Pageable pageable) {
 		model.addAttribute("publication", new Publication());
 		return "publication/add";
 	}
-
-	@RequestMapping(value = "/uploadFile")
-	public String uploadFile(Principal principal, @RequestParam(value = "file", required=false) MultipartFile image,
-			@RequestParam("text") String text, @RequestParam("title") String title) {
-		Publication publication = new Publication();
-		
-		if (image != null) {
-			DBFile dbFile = storageService.storeFile(image);
-			publication.setImage(dbFile);
-		}
-
-		User user = usersService.getUserByEmail(principal.getName());
-
-		publication.setUser(user);
-		publication.setText(text);
-		publication.setTitle(title);
-
-		publicationsService.addPublication(publication);
-
-		return "redirect:/publication/list";
-	}
+	
 }
