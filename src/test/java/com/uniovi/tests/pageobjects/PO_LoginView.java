@@ -25,6 +25,11 @@ public class PO_LoginView extends PO_NavView {
 		SeleniumUtils.EsperaCargaPagina(driver, "text", p.getString("identification", language), getTimeout());
 	}
 
+	static public void checkWarning(WebDriver driver, int language) {
+		// Esperamos a que se cargue el saludo de bienvenida en Español
+		SeleniumUtils.EsperaCargaPagina(driver, "text", p.getString("Error.login", language), getTimeout());
+	}
+	
 	static public void checkChangeIdiom(WebDriver driver, String textIdiom1, String textIdiom2, int locale1,
 			int locale2) {
 		// Esperamos a que se cargue el saludo de bienvenida en Español

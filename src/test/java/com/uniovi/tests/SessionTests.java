@@ -89,7 +89,9 @@ public class SessionTests {
 	 */
 	@Test
 	public void PR07() {
-		// TODO
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, "", "");
+		PO_LoginView.checkTitle(driver, PO_Properties.getSPANISH());
 	}
 
 	/**
@@ -98,7 +100,9 @@ public class SessionTests {
 	 */
 	@Test
 	public void PR08() {
-		// TODO
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, "rachel@friends.com", "covid19");
+		PO_LoginView.checkWarning(driver, PO_Properties.getSPANISH());
 	}
 
 	/********************************************************************************
