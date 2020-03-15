@@ -5,6 +5,9 @@ import com.uniovi.entities.Friendship;
 import com.uniovi.entities.Publication;
 import com.uniovi.entities.Role;
 import com.uniovi.entities.User;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +28,8 @@ public class InserDataSampleService {
 	@Autowired
 	private PublicationsService publicationsService;
 
+	private static final Logger logger = LoggerFactory.getLogger(InserDataSampleService.class);
+	
 	@PostConstruct
 	public void init() {
 		
@@ -37,7 +42,8 @@ public class InserDataSampleService {
 		userAdmin.setRole(admin);
 		userAdmin.setPassword("admin");
 		usersService.addUser(userAdmin);
-		
+
+		logger.info("Completed the creation of basic data");
 		// Insertion of testing data, it should be commented or edited when deployed
 		initTestData(standard, userAdmin);
 	}
@@ -99,8 +105,16 @@ public class InserDataSampleService {
 		publicationsService.addPublication(publication7);
 		Publication publication8 = new Publication("Title8", "Text8", user2);
 		publicationsService.addPublication(publication8);
+		
+
+		logger.info("Complete the creation of sample test data");
 	}
 	
+	/**
+	 * Creates a Role if it's not yet created, singleton strategy
+	 * @param name	Name of the role
+	 * @return		Created role
+	 */
 	@Transactional
     private Role createRoleIfNotFound(String name) {
   

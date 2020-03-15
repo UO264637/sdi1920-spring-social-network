@@ -28,6 +28,12 @@ public class FriendsController {
 
 	// REQUESTS -------------------------------------------------------------------
 
+	/**
+	 * @param model	
+	 * @param pageable	
+	 * @param principal
+	 * @return	Page with the list of friend requests
+	 */
 	@RequestMapping("/friends/requests")
 	public String getRequest(Model model, Pageable pageable, Principal principal) {
 		// We load the user and its requests
@@ -47,6 +53,13 @@ public class FriendsController {
 
 	// ACCEPT -------------------------------------------------------------------
 
+	/**
+	 * Accept the friend request of an user
+	 * @param model
+	 * @param principal
+	 * @param id	Id of the friendship to accept
+	 * @return	Redirection to the list of friend requests
+	 */
 	@RequestMapping(value = "/friends/accept/{id}")
 	public String accept(Model model, Principal principal, @PathVariable Long id) {
 		// We load the user and the friendship
@@ -63,6 +76,13 @@ public class FriendsController {
 
 	// REFUSE ------------------------------------------------------------
 
+	/**
+	 * Refuse a friend request
+	 * @param model
+	 * @param principal
+	 * @param id	Id of the friendship to refuse
+	 * @return	Redirection to the list of friend requests
+	 */
 	@RequestMapping(value = "/friends/refuse/{id}")
 	public String refuse(Model model, Principal principal, @PathVariable Long id) {
 		// We load the friendship
@@ -77,6 +97,12 @@ public class FriendsController {
 
 	// LIST -----------------------------------------------------------------
 
+	/**
+	 * @param model
+	 * @param pageable
+	 * @param principal
+	 * @return	Page with the list of friends
+	 */
 	@RequestMapping(value = "/friends/list")
 	public String list(Model model, Pageable pageable, Principal principal) {
 		// We load the user and the friend list

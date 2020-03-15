@@ -89,6 +89,13 @@ public class UsersController {
 	
 	// ADD FRIEND -----------------------------------------------------------------------------
 	
+	/**
+	 * Sends a friend request to the specified user
+	 * @param model
+	 * @param principal
+	 * @param email	Email of the friend to accept
+	 * @return	Redirection to the list of users
+	 */
 	@RequestMapping(value = "/user/addFriend/{email}")
 	public String addFriend(Model model, Principal principal, @PathVariable String email) {
 		// We load both users
