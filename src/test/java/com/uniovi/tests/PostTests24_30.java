@@ -20,7 +20,7 @@ import org.junit.runners.MethodSorters;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 
-public class PostTests {
+public class PostTests24_30 {
 
 	// CARMEN
 	static String PathFirefox65 = "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe";
@@ -100,8 +100,6 @@ public class PostTests {
 		elementos.get(0).click();
 
 		elementos = PO_View.checkElement(driver, "text", "Publicación 1");
-
-		PO_PrivateView.clickOption(driver, "logout", "text", "Login");
 	}
 
 	/**
