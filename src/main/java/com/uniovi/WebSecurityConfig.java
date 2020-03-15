@@ -29,12 +29,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 return new SpringSecurityDialect();
 	 }
 
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeRequests()
 				.antMatchers("/css/**", "/img/**", "/script/**", "/", "/signup", "/login/**").permitAll()
 				.antMatchers("/admin").hasAnyAuthority("ROLE_ADMIN")
-				.anyRequest().authenticated()
+				.anyRequest().authenticated() // Users can only access login and signup without beign authenticated
 				.and()
 				.formLogin().loginPage("/login").permitAll()
 				.defaultSuccessUrl("/user/list")

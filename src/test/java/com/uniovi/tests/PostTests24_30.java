@@ -4,7 +4,6 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 import org.junit.*;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -21,7 +20,7 @@ import org.junit.runners.MethodSorters;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 
-public class SocialNetworkTests {
+public class PostTests24_30 {
 
 	// CARMEN
 	static String PathFirefox65 = "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe";
@@ -70,95 +69,6 @@ public class SocialNetworkTests {
 	}
 
 	/********************************************************************************
-	 * USER LIST TESTS
-	 * 
-	 ********************************************************************************/
-
-	/**
-	 * PR11 - Show the list of users and check that it list all the registered users
-	 * on the system
-	 */
-	@Test
-	public void PR11() {
-		logAs("rachel@friends.com", "123");
-
-		// Contamos el número de filas de notas
-		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
-				PO_View.getTimeout());
-		// Todos menos el admin y rachel (Chandler, Monica, Phoebe, Joey y Ross)
-		assertTrue(elementos.size() == 5);
-		PO_View.checkElement(driver, "text", "Phoebe");
-		PO_View.checkElement(driver, "text", "Chandler");
-		PO_View.checkElement(driver, "text", "Monica");
-		PO_View.checkElement(driver, "text", "Joey");
-		PO_View.checkElement(driver, "text", "Ross");
-	}
-
-	/********************************************************************************
-	 * USER SEARCH TESTS
-	 * 
-	 ********************************************************************************/
-
-	/**
-	 * PR12 - Empty search must return the whole users list
-	 */
-	@Test
-	public void PR12() {
-		logAs("rachel@friends.com", "123");
-
-		SeleniumUtils.esperarSegundos(driver, 1);
-
-		search("");
-
-		// Contamos el número de filas de notas
-		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
-				PO_View.getTimeout());
-		// Todos menos el admin y rachel (Chandler, Monica, Phoebe, Joey y Ross)
-		assertTrue(elementos.size() == 5);
-		PO_View.checkElement(driver, "text", "Phoebe");
-		PO_View.checkElement(driver, "text", "Chandler");
-		PO_View.checkElement(driver, "text", "Monica");
-		PO_View.checkElement(driver, "text", "Joey");
-		PO_View.checkElement(driver, "text", "Ross");
-	}
-
-	/**
-	 * PR13 - Search with inexsitant text must return an empty list
-	 */
-	@Test
-	public void PR13() {
-		logAs("rachel@friends.com", "123");
-
-		SeleniumUtils.esperarSegundos(driver, 1);
-
-		search("Patata");
-
-		// Como no debería aparecer ningún usuario tampoco debería aparecer ningún email (Todos los emails deben llevar "@")
-		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "@", 1);
-	}
-
-	/**
-	 * PR14 - Specific search showing the correct list
-	 */
-	@Test
-	public void PR14() {
-		logAs("rachel@friends.com", "123");
-		
-		SeleniumUtils.esperarSegundos(driver, 1);
-
-		search("le");
-
-		// Contamos el número de filas de notas
-		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
-				PO_View.getTimeout());
-		// Todos menos el admin y rachel (Chandler, Monica, Phoebe, Joey y Ross)
-		assertTrue(elementos.size() == 3);
-		PO_View.checkElement(driver, "text", "Chandler"); // Por el nombre
-		PO_View.checkElement(driver, "text", "Monica"); // Por el apellido
-		PO_View.checkElement(driver, "text", "Ross"); // Por el apellido
-	}
-
-	/********************************************************************************
 	 * NEW POST TESTS
 	 * 
 	 ********************************************************************************/
@@ -190,8 +100,6 @@ public class SocialNetworkTests {
 		elementos.get(0).click();
 
 		elementos = PO_View.checkElement(driver, "text", "Publicación 1");
-
-		PO_PrivateView.clickOption(driver, "logout", "text", "Login");
 	}
 
 	/**
@@ -202,19 +110,18 @@ public class SocialNetworkTests {
 	public void PR25() {
 		logAs("rachel@friends.com", "123");
 				
+		// Go to add publication
 		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'publications-menu')]/a");
 		elementos.get(0).click();
 		
 		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'publication/add')]");
 		elementos.get(0).click();
 		
-		
+		// Fill form
 		PO_PrivateView.fillFormAddPublication(driver, "", "Ejemplo de publicación");
 		PO_View.getP();
 		PO_RegisterView.checkKey(driver, "Error.publication.title.length", PO_Properties.getSPANISH());
 		
-		// Ahora nos desconectamos
-		PO_PrivateView.clickOption(driver, "logout", "text", "Login");
 	}
 
 	/********************************************************************************
@@ -353,151 +260,9 @@ public class SocialNetworkTests {
 	}
 
 	/********************************************************************************
-	 * ADMIN LISTING USERS TESTS
-	 * 
-	 ********************************************************************************/
-
-	/**
-	 * PR31 - Show the list of users and check it does show all the users in the
-	 * system.
-	 */
-	@Test
-	public void PR31() {
-		logAs("admin@email.com", "admin");
-
-		// Contamos el número de filas de notas
-		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
-				PO_View.getTimeout());
-		// Todos menos el admin y ross que está en la siguiente pagina (Chandler, Monica, Phoebe, Joey y Rachel)
-		assertTrue(elementos.size() == 5);
-		PO_View.checkElement(driver, "text", "Rachel");
-		PO_View.checkElement(driver, "text", "Phoebe");
-		PO_View.checkElement(driver, "text", "Chandler");
-		PO_View.checkElement(driver, "text", "Monica");
-		PO_View.checkElement(driver, "text", "Joey");
-		
-		// Vamos a la siguiente página
-		elementos = PO_View.checkElement(driver, "free", "//a[contains(@class,'page-link')]");
-		elementos.get(3).click();
-
-		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
-				PO_View.getTimeout());
-		assertTrue(elementos.size() == 1);
-		
-		PO_View.checkElement(driver, "text", "Ross");
-	}
-
-	/********************************************************************************
-	 * ADMIN MULTIPLE DELETE TESTS
-	 * 
-	 ********************************************************************************/
-
-	/**
-	 * PR32 - List the users and delete the first user on the list. Check the list
-	 * updates and the user dissappears.
-	 */
-	@Test
-	public void PR32() {
-		logAs("admin@email.com", "admin");
-		
-		// Comprobamos que está Rachel (Siempre aparece la primera)
-		PO_View.checkElement(driver, "text", "Rachel");
-					
-		// Borramos el primero
-		List<WebElement> elementos = PO_View.checkElement(driver, "free",
-				"//td[contains(text(), '')]/following-sibling::*/input[contains(@name,'cb')]");
-		elementos.get(0).click();
-		By boton = By.id("deleteButton");
-		driver.findElement(boton).click();
-		
-		// Comprobamos que no está Rachel pero están los otros 5
-		SeleniumUtils.textoNoPresentePagina(driver, "Rachel");
-		
-		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
-				PO_View.getTimeout());
-		assertTrue(elementos.size() == 5);
-		
-		// La segunda página debería estar vacía
-		elementos = PO_View.checkElement(driver, "free", "//a[contains(@class,'page-link')]");
-		elementos.get(3).click();
-
-		try {
-			elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
-			PO_View.getTimeout());
-			fail();
-		} catch (Exception e) {
-					
-		}
-	}
-
-	/**
-	 * PR33 - List the users and delete the last user on the list. Check the list
-	 * updates and the user dissappears.
-	 */
-	@Test
-	public void PR33() {
-		logAs("admin@email.com", "admin");
-		
-		// Comprobamos que está Ross (Siempre aparece el último)
-		PO_View.checkElement(driver, "text", "Ross");
-							
-		// Borramos el último (ahora solo hay una página)
-		List<WebElement> elementos = PO_View.checkElement(driver, "free",
-				"//td[contains(text(), '')]/following-sibling::*/input[contains(@name,'cb')]");
-		elementos.get(elementos.size()-1).click();
-		By boton = By.id("deleteButton");
-		driver.findElement(boton).click();
-				
-		// Comprobamos que solo quedan 4 
-		SeleniumUtils.textoNoPresentePagina(driver, "Ross");
-			
-		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
-					PO_View.getTimeout());
-		assertTrue(elementos.size() == 4);
-	}
-
-	/**
-	 * PR34 - List the users, delete three users and check the list updates and
-	 * those users disappears.
-	 */
-	@Test
-	public void PR34() {
-		logAs("admin@email.com", "admin");
-		
-		// Comprobamos que quedan 4 					
-		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
-							PO_View.getTimeout());
-		assertTrue(elementos.size() == 4);
-							
-		// Borramos el último (ahora solo hay una página)
-		elementos = PO_View.checkElement(driver, "free",
-				"//td[contains(text(), '')]/following-sibling::*/input[contains(@name,'cb')]");
-		elementos.get(0).click();
-		elementos.get(1).click();
-		elementos.get(2).click();
-		By boton = By.id("deleteButton");
-		driver.findElement(boton).click();
-				
-		// Comprobamos que solo quedan 4
-			
-		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr",
-					PO_View.getTimeout());
-		assertTrue(elementos.size() == 1);
-	}
-
-	/********************************************************************************
 	 * HELPING AND NAVIGATION METHODS
 	 * 
 	 ********************************************************************************/
-	private void search(String search) {
-		WebElement email = driver.findElement(By.name("searchText"));
-		email.click();
-		email.clear();
-		email.sendKeys(search);
-		By boton = By.id("searchBtn");
-		driver.findElement(boton).click();
-	}
-
 	private void logAs(String email, String password) {
 		// Vamos al formulario de logueo.
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");

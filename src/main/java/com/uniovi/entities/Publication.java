@@ -27,10 +27,19 @@ public class Publication {
 	@JoinColumn(name = "user_id")
 	private User user;
 
+	/**
+	 * Default constructor
+	 */
 	public Publication() {
 		this.date = LocalDateTime.now();
 	}
 
+	/**
+	 * Constructor
+	 * @param title
+	 * @param text
+	 * @param user
+	 */
 	public Publication(String title, String text, User user) {
 		this();
 		this.text = text;
