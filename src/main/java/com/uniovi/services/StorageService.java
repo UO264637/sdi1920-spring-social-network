@@ -19,6 +19,11 @@ public class StorageService {
 
 	private static final Logger logger = LoggerFactory.getLogger(StorageService.class);
 
+	/**
+	 * Stores the MultipartFile converting it to a DBFile
+	 * @param file
+	 * @return
+	 */
 	public DBFile storeFile(MultipartFile file) {
 		// Normalize file name
 		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
@@ -39,6 +44,11 @@ public class StorageService {
 		}
 	}
 
+	/**
+	 * Returns the file form the DB
+	 * @param fileId
+	 * @return
+	 */
 	public DBFile getFile(String fileId) {
 		logger.info("Retrieved file " + fileId);
 		return dbFileRepository.findById(fileId).orElseThrow(() -> new RuntimeException("File not found with id " + fileId));

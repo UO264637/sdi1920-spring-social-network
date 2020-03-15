@@ -27,6 +27,11 @@ public class SecurityService {
 		return null;
 	}
 	
+	/**
+	 * Autologs the user
+	 * @param email
+	 * @param password
+	 */
 	public void autoLogin(String email, String password) {
 		UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 
